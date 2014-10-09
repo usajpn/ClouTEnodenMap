@@ -1,0 +1,16 @@
+{
+  "name": "ClouTEnodenMap",
+  "version": "0.0.0",
+  "homepage": "https://github.com/usajpn/ClouTEnodenMap",
+  "authors": [
+    "Shin Usami <usa@ht.sfc.keio.ac.jp>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
