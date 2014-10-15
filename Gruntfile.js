@@ -14,7 +14,7 @@ module.exports = function(grunt) {
                     './js/Device.js',
                     './js/Transducer.js',
                     './js/SensorData.js',
-                    './js/SoxClient.js',
+                    './js/EnodenTimetable.js',
                     './bower_components/Processing.js/processing.js'
                 ],
                 dest: 'dist/Enoshimap.js'

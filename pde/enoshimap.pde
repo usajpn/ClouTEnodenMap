@@ -1,15 +1,15 @@
-/* @pjs preload="../img/map.png, ../img/sunny.png, ../img/cloudy.png, ../img/rainy.png, ../img/enone.png, ../img/enonex.png, ../img/wave.png, ../img/bubble.png, ../img/weatherbubble.png */
+/* @pjs preload="../ClouT/img/map.png, ../ClouT/img/sunny.png, ../ClouT/img/cloudy.png, ../ClouT/img/rainy.png, ../ClouT/img/enone.png, ../ClouT/img/enonex.png, ../ClouT/img/wave.png, ../ClouT/img/bubble.png, ../ClouT/img/weatherbubble.png */
 
 int timer = 0;
 boolean small = true;
 boolean smallE = true;
 boolean left = true;
-String[] weather = ["../img/sunny.png", "../img/cloudy.png", "../img/rainy.png"];
+String[] weather = ["../ClouT/img/sunny.png", "../ClouT/img/cloudy.png", "../ClouT/img/rainy.png"];
 
 // Processing default function (1)
 void setup() {
 	size(window.screen.width, window.screen.height);
-	background(255);
+	background(0);
 	fill(0);
 	PFont fontA = loadFont("courier");
 	textFont(fontA, 20);  
@@ -19,15 +19,16 @@ void setup() {
 void draw(){
 	timer++;
 	drawBackground();
-	drawEnone();
+	//drawEnone();
 	drawWeather();
 	drawTemperature();
 	drawHumidity();
-	drawWave();
+	//drawWave();
 }
 
 void drawBackground() {
-	drawImage("../img/map.png", 0, 0, document.body.offsetWidth, document.body.offsetHeight);
+	background(0);
+	//drawImage("../ClouT/img/map.png", 0, 0, document.body.offsetWidth, document.body.offsetHeight);
 }
 
 void drawEnone() {
@@ -40,12 +41,13 @@ void drawEnone() {
 	}
 
 	if (smallE) {
-		drawImage("../img/enonex.png", 800, 250, 100, 100);
-		drawImage("../img/bubble.png", 400, 240, 400, 150);
+		drawImage("../ClouT/img/enonex.png", 800, 250, 100, 100);
+		drawImage("../ClouT/img/bubble.png", 400, 240, 400, 150);
 		textSize(30);
+		fill(0, 0, 0);
 		text("到着まであと2分!", 450, 320);
 	} else {
-		drawImage("../img/enone.png", 790, 240, 120, 120);
+		drawImage("../ClouT/img/enone.png", 790, 240, 120, 120);
 	}
 }
 
@@ -58,25 +60,27 @@ void drawWeather() {
 		}
 	}
 	
-	drawImage("../img/weatherbubble.png", 900, 50, 500, 210);
+	//drawImage("../ClouT/img/weatherbubble.png", 100, 100, 1200, 600);
 
 	if (small) {
-		drawImage(weather[getWeather()], 950, 100, 100, 100);
+		drawImage(weather[getWeather()], 0, 0, 600, 600);
 	} else {
-		drawImage(weather[getWeather()], 940, 90, 120, 120);
+		drawImage(weather[getWeather()], 0, 10, 600, 600);
 	}
 }
 
 void drawTemperature() {
 	int temp = getEnoshimaTemperature();
-	textSize(48);
-	text("気温: " + temp + "°C", 1100, 140);
+	fill(255, 255, 255);
+	textSize(60);
+	text("気温: " + temp + "°C", 800, 200);
 }
 
 void drawHumidity() {
 	int hum = getEnoshimaHumidity();
-	textSize(48);
-	text("湿度: " + hum + "%", 1100, 200);
+	fill(255, 255, 255);
+	textSize(60);
+	text("湿度: " + hum + "%", 800, 400);
 }
 
 void drawWave() {
@@ -89,25 +93,25 @@ void drawWave() {
 	}
 
 	if (left) {
-		drawImage("../img/wave.png", 70, 550, 50, 50);
-		drawImage("../img/wave.png", 120, 600, 50, 50);
-		drawImage("../img/wave.png", 150, 500, 50, 50);
-		drawImage("../img/wave.png", 500, 700, 50, 50);
-		drawImage("../img/wave.png", 600, 650, 50, 50);
-		drawImage("../img/wave.png", 800, 750, 50, 50);
-		drawImage("../img/wave.png", 900, 700, 50, 50);
-		drawImage("../img/wave.png", 1250, 600, 50, 50);
-		drawImage("../img/wave.png", 1300, 700, 50, 50);
+		drawImage("../ClouT/img/wave.png", 70, 550, 50, 50);
+		drawImage("../ClouT/img/wave.png", 120, 600, 50, 50);
+		drawImage("../ClouT/img/wave.png", 150, 500, 50, 50);
+		drawImage("../ClouT/img/wave.png", 500, 700, 50, 50);
+		drawImage("../ClouT/img/wave.png", 600, 650, 50, 50);
+		drawImage("../ClouT/img/wave.png", 800, 750, 50, 50);
+		drawImage("../ClouT/img/wave.png", 900, 700, 50, 50);
+		drawImage("../ClouT/img/wave.png", 1250, 600, 50, 50);
+		drawImage("../ClouT/img/wave.png", 1300, 700, 50, 50);
 	} else {
-		drawImage("../img/wave.png", 60, 550, 50, 50);
-		drawImage("../img/wave.png", 110, 600, 50, 50);
-		drawImage("../img/wave.png", 140, 500, 50, 50);
-		drawImage("../img/wave.png", 490, 700, 50, 50);
-		drawImage("../img/wave.png", 590, 650, 50, 50);
-		drawImage("../img/wave.png", 790, 750, 50, 50);
-		drawImage("../img/wave.png", 890, 700, 50, 50);
-		drawImage("../img/wave.png", 1240, 600, 50, 50);
-		drawImage("../img/wave.png", 1290, 700, 50, 50);
+		drawImage("../ClouT/img/wave.png", 60, 550, 50, 50);
+		drawImage("../ClouT/img/wave.png", 110, 600, 50, 50);
+		drawImage("../ClouT/img/wave.png", 140, 500, 50, 50);
+		drawImage("../ClouT/img/wave.png", 490, 700, 50, 50);
+		drawImage("../ClouT/img/wave.png", 590, 650, 50, 50);
+		drawImage("../ClouT/img/wave.png", 790, 750, 50, 50);
+		drawImage("../ClouT/img/wave.png", 890, 700, 50, 50);
+		drawImage("../ClouT/img/wave.png", 1240, 600, 50, 50);
+		drawImage("../ClouT/img/wave.png", 1290, 700, 50, 50);
 	}
 }
 

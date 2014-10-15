@@ -40,7 +40,7 @@ function getNextDeparture() {
 }
 
 function eventListener(device, transducer, data) {
-	if(device.nodeName=="江ノ島今日の天気"){
+	if(device.nodeName=="江ノ島明日の天気"){
 		if (transducer.name == "天気") {
 			var value = String(data.rawValue);
 
@@ -76,7 +76,7 @@ function eventListener(device, transducer, data) {
 }
 
 $(document).ready(function() {
-	var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "江ノ島今日の天気", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
+	var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "江ノ島明日の天気", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
 	try {
 		device.subscribe();
 		device.setSensorDataListener(eventListener);

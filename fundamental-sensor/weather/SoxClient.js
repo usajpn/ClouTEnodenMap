@@ -22,8 +22,9 @@ function getEnoshimaHumidity() {
 	return EnoshimaSensorInfo.humidity;
 }
 
-/* 0: sunny, 1: cloudy, 2: rainy */
+/* 0: sunny, 1: cloudy, 2: rainy 3: sunny-cloudy 4:cloudy-rainy */
 function getWeather() {
+	console.log(EnoshimaSensorInfo.weather);
 	return EnoshimaSensorInfo.weather;
 }
 
@@ -44,10 +45,10 @@ function eventListener(device, transducer, data) {
 		if (transducer.name == "天気") {
 			var value = String(data.rawValue);
 
-			if (value.indexOf("晴時々曇") > -1 || value.indexOf("曇時々晴") > -1) {
+			if (value.indexOf("晴") > -1 && value.indexOf("曇") > -1) {
 				EnoshimaSensorInfo.weather = 3;
 			}
-			else if (value.indexOf("雨時々曇") > -1 || value.indexOf("曇時々雨") > -1) {
+			else if (value.indexOf("雨") > -1 && value.indexOf("曇") > -1) {
 				EnoshimaSensorInfo.weather = 4;
 			}
 			else if (value.indexOf("晴") > -1) {
