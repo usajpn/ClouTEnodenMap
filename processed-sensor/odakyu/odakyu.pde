@@ -53,14 +53,8 @@ void drawOdakyu() {
 void drawOdakyuInfo() {
     fill(255, 255, 255);
 
-    if (small) {
-        textSize(80);
-        text(info[odakyuStatus], 500, 450);
-    }
-    else {
-        textSize(100);
-        text(info[odakyuStatus], 450, 450);
-    }
+    textSize(100);
+    text(info[odakyuStatus], 450, 450);
 }
 
 void drawImage(String imgPath, x, y) {
