@@ -3,6 +3,7 @@
 boolean small = false;
 int timer = 0;
 int amount = 0;
+String txt = {"しらす 本日大漁!", "しらす おいしいよ！", "しらす 本日わずか"};
 
 // Processing default function (1)
 void setup() {
@@ -18,8 +19,8 @@ void draw(){
     timer++;
     drawBackground();
     amount = getEnoshimaShirasuAmount();
-    drawShirasu();
     drawAmount();
+    drawShirasu();
 }
 
 void drawBackground() {
@@ -27,7 +28,7 @@ void drawBackground() {
 }
 
 void drawShirasu() {
-    if (timer % 20 == 0) {
+    if (timer % 40 == 0) {
         if (small) {
             small = false;
         }
@@ -36,48 +37,67 @@ void drawShirasu() {
         }
     }
 
-    if (amount == 1) {
-        drawImage("../../img/shirasu.png", 50, 100, 640, 480);
-        drawImage("../../img/shirasu.png", 50, 2000, 640, 480);
-        drawImage("../../img/shirasu.png", 150, 100, 640, 480);
-        drawImage("../../img/shirasu.png", 150, 200, 640, 480);
+    if (amount == 0) {
+        if (small) {
+            drawImage("../../img/shirasu.png", 150, 200, 640, 480);
+            drawImage("../../img/shirasu.png", 250, 200, 640, 480);
+            drawImage("../../img/shirasu.png", 150, 100, 640, 480);
+            drawImage("../../img/shirasu.png", 250, 100, 640, 480);
+        }
+        else {
+            drawImage("../../img/shirasu.png", 160, 210, 640, 480);
+            drawImage("../../img/shirasu.png", 260, 210, 640, 480);
+            drawImage("../../img/shirasu.png", 200, 110, 640, 480);
+            drawImage("../../img/shirasu.png", 300, 110, 640, 480);
+        }
     }
-    else if (amount == 2) {
-        drawImage("../../img/shirasu.png", 150, 150, 640, 480);
+    else if (amount == 1) {
+        if (small) {
+            drawImage("../../img/shirasu.png", 250, 150, 640, 480);
+        }
+        else {
+            drawImage("../../img/shirasu.png", 250, 130, 640, 480);
+        }
     }
     else {
-        drawImage("../../img/shirasu.png", 150, 150, 640, 480);
+        if (small) {
+            drawImage("../../img/shirasu.png", 250, 150, 640, 480);
+        }
+        else {
+            drawImage("../../img/shirasu.png", 250, 130, 640, 480);
+        }
     }
 }
 
 void drawAmount() {
     fill(255, 255, 255);
 
-    if (amount == 1) {
+    if (amount == 0) {
         fill(204, 0, 0);
 
         if (small) {
             textSize(80);
-            text("本日大漁!", 220, 80);
+            text(txt[0], 220, 80);
         }
         else {
             textSize(100);
-            text("本日大漁!", 180, 100);
+            text(txt[0], 160, 100);
         }
     }
-    else if (amount == 2) {
+    else if (amount == 1) {
         fill(34, 195, 80);
         if (small) {
             textSize(80);
-            text("おいしいよ!", 200, 80);
+            text(txt[1], 220, 80);
         }
         else {
             textSize(100);
-            text("おいしいよ!", 160, 100);
+            text(txt[1], 160, 100);
         }
     }
     else {
-        drawImage("../../img/batsu.png", 150, 150, 640, 480);
+        textSize(100);
+        text(txt[2], 160, 100);
     }
 }
 

@@ -3,7 +3,7 @@
 boolean small = false;
 int timer = 0;
 int odakyuStatus = 0;
-String info = {"平常運転", "只今遅延\nしております"};
+String info = {"小田急線は\n平常運転です", "只今遅延\nしております"};
 
 // Processing default function (1)
 void setup() {
@@ -22,6 +22,13 @@ void draw(){
     drawStaff();
     drawOdakyu();
     drawOdakyuInfo();
+
+    if (timer % 40 == 0) {
+        small = true;
+    }
+    else {
+        small = false;
+    }
 }
 
 void drawBackground() {
@@ -29,29 +36,25 @@ void drawBackground() {
 }
 
 void drawStaff() {
-    if (timer % 20 == 0) {
-        if (small) {
-            small = false;
-        }
-        else {
-            small = true;
-        }
-    }
-
-    if (small) {
-        drawImage("../../img/odakyu/staff" + odakyuStatus + ".png", 25, 25, 430, 600);
-    }
-    else {
-        drawImage("../../img/odakyu/staff" + odakyuStatus + ".png", 0, 0, 480, 640);
-    }
+    drawImage("../../img/odakyu/staff" + odakyuStatus + ".png", 0, 0, 480, 640);
 }
 
 void drawOdakyu() {
-    drawImage("../../img/odakyu/odakyu.png", 450, 0, 320, 350);
+    if (small) {
+        drawImage("../../img/odakyu/odakyu.png", 475, 110, 400, 200);
+    }
+    else {
+        drawImage("../../img/odakyu/odakyu.png", 475, 100, 400, 200);
+    }
 }
 
 void drawOdakyuInfo() {
-    fill(255, 255, 255);
+    if (odakyuStatus == 0) {
+        fill(71, 234, 126);
+    }
+    else {
+        fill(255, 129, 25);
+    }
 
     textSize(100);
     text(info[odakyuStatus], 450, 450);
