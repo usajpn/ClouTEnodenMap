@@ -23,32 +23,32 @@ var EnodenTimetable = [
 function getMinutesTilDeparture() {
 	var d = new Date();
 	var cTime = d.getTime();
+	var result = "0";
 
 	for(var i=0; i<EnodenTimetable.length; i++) {
 		var diff = getTimeDiff(EnodenTimetable[i], cTime);
-		var lastTrain = (i == (EnodenTimetable.length - 1));
-
 		var nextDiff;
-		if (lastTrain) {
-			nextDiff = getTimeDiff(EnodenTimetable[0], cTime);
+
+		if (i == (EnodenTimetable.length - 1)) {
+			break;
 		} else {
 			nextDiff = getTimeDiff(EnodenTimetable[i+1], cTime);
 		}
 
-		if (0 < diff && nextDiff < 0) {
+		// float????????
+
+		if (0 < diff && nextDiff <= 0 && (-100) < nextDiff) {
+			var nextNextDiff = getTimeDiff(EnodenTimetable[i+2], cTime);
+			var minTilDep = Math.floor(nextNextDiff / (1000 * 60) * -1);
+			result = String(minTilDep);
+			break;
+		} else if (0 < diff && nextDiff <= 0) {
 			var minTilDep = Math.floor(nextDiff / (1000 * 60) * -1);
-			if (minTilDep == 0) {
-				if (lastTrain) {
-					return String(getTimeDiff(EnodenTimetable[1], cTime));
-				} else {
-					return String(getTimeDiff(EnodenTimetable[i+2], cTime));
-				}
-			} else {
-				return String(minTilDep);
-			}
+			result = String(minTilDep);
+			break;
 		}
 	}
-	return 0;
+	return result;
 }
 
 // return minus when cTime is before Enotime

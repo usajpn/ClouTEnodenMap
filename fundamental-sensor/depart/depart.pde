@@ -52,7 +52,13 @@ void drawEnone() {
 			fill(255, 0, 0);
 			text("江ノ電は", 60, 220);
 			text("現在遅延しています", 150, 320);			
-		} else {
+		} 
+		// else if (minTilDep == "0") {
+		// 	fill(255, 0, 0);
+		// 	text("江ノ電の", 60, 220);
+		// 	text("終電は終わりました。", 150, 320);
+		// }
+		else {
 			text("江ノ電発車まで", 60, 220);
 			if (minTilDep <= 5) {
 				fill(255, 0, 0);
