@@ -71,6 +71,18 @@ Device.prototype._processLastPublishedItem = function(node, id, entry, timestamp
 			}
 			console.log("Created " + transducer.toString());
 		}
+	}else if (node.indexOf('_data') != -1) {
+
+		var transducerValues = $(entry).find("transducerValue");
+		for (var i = 0; i < transducerValues.length; i++) {
+			var data = new SensorData(transducerValues.eq(i));
+			var transducer = this.transducerMap[data.id];
+			var listener = transducer ? transducer.sensorDataListener : null;
+			if (listener) {
+				listener(this, transducer, data);
+			}
+			console.log("Received " + data.toString());
+		}
 	}
 };
 
