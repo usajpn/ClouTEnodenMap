@@ -1,7 +1,11 @@
 <html style="background-color: black;">
 <head>
+	<!-- <title>ClouT Enoshimap Demo</title> -->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta http-equiv="Content-Script-Type" content="text/javascript; charset=utf-8">
 	<title>ClouT Enoshimap Demo</title>
 	<script src="./dist/Enoshimap.js"></script>
+	<script src="./SoxClient.js"></script>
 	<style type="text/css">
 		<!--
 		* {
@@ -21,10 +25,12 @@
 		<li><a href="./fundamental-sensor/nextday-weather/index.html">How is the weather tomorrow?</a></li>
 		<li><a href="./fundamental-sensor/depart/index.html">When will Enoden leave?</a></li>
 		<li><a href="./fundamental-sensor/wind/index.html">Will I be blown away?</a></li>
-		<li><a href="./fundamental-sensor/star/index.html">Can we see the stars tonight?</a></li>
+		<!--		<li><a href="./fundamental-sensor/star/index.html">Can we see the stars tonight?</a></li>-->
 		<li><a href="./fundamental-sensor/sunset/index.html">When can I see the sunset today?</a></li>
+		<li><a href="./fundamental-sensor/ultraviolet/index.html">Sunscreen?</a></li>
 	</ul>
 	<h2>Processed Sensor Demo (shinny)</h2>
+	<canvas data-processing-sources="./fundamental-sensor/depart/depart.pde"></canvas>
 	
 </body>
 </html>

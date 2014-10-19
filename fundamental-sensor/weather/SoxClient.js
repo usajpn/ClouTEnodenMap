@@ -24,7 +24,6 @@ function getEnoshimaHumidity() {
 
 /* 0: sunny, 1: cloudy, 2: rainy 3: sunny-cloudy 4:cloudy-rainy */
 function getWeather() {
-	console.log(EnoshimaSensorInfo.weather);
 	return EnoshimaSensorInfo.weather;
 }
 
