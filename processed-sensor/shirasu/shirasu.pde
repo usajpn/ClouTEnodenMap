@@ -2,7 +2,7 @@
 
 boolean small = false;
 int timer = 0;
-int amount = 0;
+int amount = 2;
 String txt = {"しらす 本日大漁!", "しらす おいしいよ！", "しらす 本日わずか"};
 
 // Processing default function (1)
@@ -72,6 +72,7 @@ void drawShirasu() {
 void drawAmount() {
     fill(255, 255, 255);
 
+    // 大漁
     if (amount == 0) {
         if (small) {
             textSize(80);
@@ -82,6 +83,7 @@ void drawAmount() {
             text(txt[0], 160, 100);
         }
     }
+    // 入荷僅か
     else if (amount == 1) {
         if (small) {
             textSize(80);
@@ -92,6 +94,7 @@ void drawAmount() {
             text(txt[1], 160, 100);
         }
     }
+    // 未入荷
     else {
         textSize(100);
         text(txt[2], 160, 100);

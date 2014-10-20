@@ -8,7 +8,7 @@ function getEnoshimaShirasuAmount() {
 function eventListener(device, transducer, data) {
     var today = getToday();
 
-    if(device.nodeName=="「しらす_こうじろう」の湘南しらす情報2014"){
+    if(device.nodeName=="しらすの入荷情報湘南"){
         if (transducer.name == "入荷情報") {
             EnoshimaSensorInfo.shirasu = data.rawValue;
 
@@ -42,7 +42,7 @@ function eventListener(device, transducer, data) {
 function getToday() {
     var now = new Date();
     var month = now.getMonth() + 1;
-    var day = now.getDate() + 1;
+    var day = now.getDate();
 
     var today =  month + "月" + day + "日";
 
@@ -50,7 +50,7 @@ function getToday() {
 }
 
 $(document).ready(function() {
-    var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "「しらす_こうじろう」の湘南しらす情報2014", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
+    var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "しらすの入荷情報湘南", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
     try {
         device.subscribe();
         device.setSensorDataListener(eventListener);
