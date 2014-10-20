@@ -62,21 +62,22 @@ void drawMarine() {
 
 void drawCondition(index) {
     textSize(100);
+    fill(255, 255, 255);
 
     if (index == 0) {
-        fill(67, 135, 233);
+        //fill(67, 135, 233);
         text(status[0], 350, 575);
     }
     else if (index == 1) {
-        fill(34, 195, 80);
+        //fill(34, 195, 80);
         text(status[index], 130, 575);
     }
     else if (index == 2) {
-        fill(228, 155, 15);
+        //fill(228, 155, 15);
         text(status[index], 150, 575);
     }
     else {
-        fill(34 ,195, 80);
+        //fill(34 ,195, 80);
         text(status[0], 350, 575);
     }
 }

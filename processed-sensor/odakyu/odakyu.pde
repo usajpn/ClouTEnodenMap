@@ -49,12 +49,7 @@ void drawOdakyu() {
 }
 
 void drawOdakyuInfo() {
-    if (odakyuStatus == 0) {
-        fill(71, 234, 126);
-    }
-    else {
-        fill(255, 129, 25);
-    }
+    fill(255, 255, 255);
 
     textSize(100);
     text(info[odakyuStatus], 450, 450);

@@ -73,8 +73,6 @@ void drawAmount() {
     fill(255, 255, 255);
 
     if (amount == 0) {
-        fill(204, 0, 0);
-
         if (small) {
             textSize(80);
             text(txt[0], 220, 80);
@@ -85,7 +83,6 @@ void drawAmount() {
         }
     }
     else if (amount == 1) {
-        fill(34, 195, 80);
         if (small) {
             textSize(80);
             text(txt[1], 220, 80);
