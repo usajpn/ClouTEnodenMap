@@ -14,12 +14,12 @@ function eventListener(device, transducer, data) {
 
             if (data.rawValue.indexOf(today) < 0) {
                 // 未入荷
-                EnoshimaSensorInfo.amount = 2;
+                EnoshimaSensorInfo.amount = 1;
             }
 
             if (data.rawValue.indexOf("未入荷") >= 0) {
                 // 未入荷
-                EnoshimaSensorInfo.amount = 2;
+                EnoshimaSensorInfo.amount = 1;
             }
             else if (data.rawValue.indexOf("入荷") >= 0) {
                 if (data.rawValue.indexOf("僅か") >= 0) {
@@ -33,7 +33,7 @@ function eventListener(device, transducer, data) {
             }
             else {
                 // 未入荷
-                EnoshimaSensorInfo.amount = 2;
+                EnoshimaSensorInfo.amount = 1;
             }
         }
     }

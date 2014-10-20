@@ -2,8 +2,8 @@
 
 boolean small = false;
 int timer = 0;
-int amount = 2;
-String txt = {"しらす 本日大漁!", "しらす おいしいよ！", "しらす 本日わずか"};
+int amount = 1;
+String txt = {"しらす 入荷あり!", "しらす 本日わずか"};
 
 // Processing default function (1)
 void setup() {
@@ -51,14 +51,6 @@ void drawShirasu() {
             drawImage("../../img/shirasu.png", 300, 110, 640, 480);
         }
     }
-    else if (amount == 1) {
-        if (small) {
-            drawImage("../../img/shirasu.png", 250, 150, 640, 480);
-        }
-        else {
-            drawImage("../../img/shirasu.png", 250, 130, 640, 480);
-        }
-    }
     else {
         if (small) {
             drawImage("../../img/shirasu.png", 250, 150, 640, 480);
@@ -75,29 +67,18 @@ void drawAmount() {
     // 大漁
     if (amount == 0) {
         if (small) {
-            textSize(80);
-            text(txt[0], 220, 80);
+            textSize(70);
+            text(txt[0], 250, 80);
         }
         else {
-            textSize(100);
-            text(txt[0], 160, 100);
+            textSize(80);
+            text(txt[0], 240, 100);
         }
     }
     // 入荷僅か
     else if (amount == 1) {
-        if (small) {
-            textSize(80);
-            text(txt[1], 220, 80);
-        }
-        else {
-            textSize(100);
-            text(txt[1], 160, 100);
-        }
-    }
-    // 未入荷
-    else {
-        textSize(100);
-        text(txt[2], 160, 100);
+        textSize(70);
+        text(txt[1], 270, 80);
     }
 }
 
