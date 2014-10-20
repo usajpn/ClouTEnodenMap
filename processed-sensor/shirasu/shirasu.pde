@@ -3,7 +3,7 @@
 boolean small = false;
 int timer = 0;
 int amount = 1;
-String txt = {"しらす 入荷あり!", "しらす 本日わずか"};
+String txt = {"しらす 入荷あり!\n食べに行こう！", "しらす 本日わずか"};
 
 // Processing default function (1)
 void setup() {
@@ -39,16 +39,16 @@ void drawShirasu() {
 
     if (amount == 0) {
         if (small) {
-            drawImage("../../img/shirasu.png", 150, 200, 640, 480);
-            drawImage("../../img/shirasu.png", 250, 200, 640, 480);
-            drawImage("../../img/shirasu.png", 150, 100, 640, 480);
-            drawImage("../../img/shirasu.png", 250, 100, 640, 480);
+            drawImage("../../img/shirasu.png", 150, 250, 640, 480);
+            drawImage("../../img/shirasu.png", 250, 250, 640, 480);
+            drawImage("../../img/shirasu.png", 150, 150, 640, 480);
+            drawImage("../../img/shirasu.png", 250, 150, 640, 480);
         }
         else {
-            drawImage("../../img/shirasu.png", 160, 210, 640, 480);
-            drawImage("../../img/shirasu.png", 260, 210, 640, 480);
-            drawImage("../../img/shirasu.png", 200, 110, 640, 480);
-            drawImage("../../img/shirasu.png", 300, 110, 640, 480);
+            drawImage("../../img/shirasu.png", 160, 270, 640, 480);
+            drawImage("../../img/shirasu.png", 260, 270, 640, 480);
+            drawImage("../../img/shirasu.png", 200, 170, 640, 480);
+            drawImage("../../img/shirasu.png", 300, 170, 640, 480);
         }
     }
     else {
@@ -71,7 +71,7 @@ void drawAmount() {
             text(txt[0], 250, 80);
         }
         else {
-            textSize(80);
+            textSize(70);
             text(txt[0], 240, 100);
         }
     }
