@@ -48,16 +48,11 @@ void drawStarStatus() {
     textSize(80);
     fill(255, 255, 255);
     String txt = getEnoshimaStarInfo();
-    /*
-    int width = textWidth(txt);
-
-    pos = pos - 2;
-    if (pos < width * -1) {
-        pos = 700;
-    }
-    */
 
     text(txt, 0, 80);
+
+    textSize(20);
+    text("出典: excite 天気", 20, 160);
 }
 
 
