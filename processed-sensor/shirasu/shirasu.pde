@@ -2,7 +2,7 @@
 
 boolean small = false;
 int timer = 0;
-int amount = 1;
+int amount = 2;
 String txt = {"しらす 入荷あり!\n食べに行こう！", "しらす 本日わずか"};
 
 // Processing default function (1)
@@ -79,6 +79,10 @@ void drawAmount() {
     else if (amount == 1) {
         textSize(70);
         text(txt[1], 270, 80);
+    }
+    else {
+        textSize(70);
+        text("", 540, 80);
     }
 }
 

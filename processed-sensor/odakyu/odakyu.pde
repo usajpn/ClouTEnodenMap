@@ -23,7 +23,7 @@ void draw(){
     drawOdakyu();
     drawOdakyuInfo();
 
-    if (timer % 40 == 0) {
+    if (timer % 20 == 0) {
         small = true;
     }
     else {
@@ -41,10 +41,10 @@ void drawStaff() {
 
 void drawOdakyu() {
     if (small) {
-        drawImage("../../img/odakyu/odakyu.png", 475, 110, 400, 200);
+        drawImage("../../img/odakyu/odakyu.png", 475, 110, 400, 150);
     }
     else {
-        drawImage("../../img/odakyu/odakyu.png", 475, 100, 400, 200);
+        drawImage("../../img/odakyu/odakyu.png", 475, 100, 400, 150);
     }
 }
 
@@ -52,7 +52,9 @@ void drawOdakyuInfo() {
     fill(255, 255, 255);
 
     textSize(100);
-    text(info[odakyuStatus], 450, 450);
+    text(info[odakyuStatus], 450, 400);
+    textSize(20);
+    text("（各社ホームページより。実際の運行状況と異なる可能性があります）", 450, 560);
 }
 
 void drawImage(String imgPath, x, y) {

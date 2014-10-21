@@ -1,5 +1,5 @@
 var EnoshimaSensorInfo = {};
-EnoshimaSensorInfo.amount = 0;
+EnoshimaSensorInfo.amount = 2;
 
 function getEnoshimaShirasuAmount() {
     return EnoshimaSensorInfo.amount;
@@ -15,6 +15,8 @@ function eventListener(device, transducer, data) {
             if (data.rawValue.indexOf(today) < 0) {
                 // 未入荷
                 EnoshimaSensorInfo.amount = 1;
+
+                return;
             }
 
             if (data.rawValue.indexOf("未入荷") >= 0) {
