@@ -29,6 +29,13 @@ function getComfortness(temperature, humid) {
         comfortness = 0;
     }
 
+    if (humid > 75) {
+        comfortness = 0;
+    }
+    if (temperature < 18) {
+        comfortness = 0;
+    }
+
     return comfortness;
 }
 
