@@ -45,7 +45,7 @@ void drawStar() {
 }
 
 void drawStarStatus() {
-    textSize(80);
+    textSize(70);
     fill(255, 255, 255);
     String txt = getEnoshimaStarInfo();
 

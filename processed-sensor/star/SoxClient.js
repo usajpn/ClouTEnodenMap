@@ -14,14 +14,17 @@ function eventListener(device, transducer, data) {
     if(device.nodeName=="江ノ島今日の生活指数"){
         if (transducer.name == "星空") {
             EnoshimaSensorInfo.starInfo = data.rawValue;
+            console.log(data.rawValue);
 
-            if (data.rawValue.indexOf("空いっぱい") >= 0 && data.rawValue.indexOf("まずまず") >= 0) {
+            if (data.rawValue.indexOf("空一杯") >= 0 || data.rawValue.indexOf("まずまず") >= 0) {
                 EnoshimaSensorInfo.starStatus = 1;
             }
-            else if (data.rawValue.indexOf("期待") >= 0 && data.rawValue.indexOf("わずか") >= 0) {
+            else if (data.rawValue.indexOf("期待") >= 0 || data.rawValue.indexOf("わずか") >= 0) {
+                EnoshimaSensorInfo.starInfo = "星空は期待できなさそう。残念。";
                 EnoshimaSensorInfo.starStatus = 0;
             }
             else {
+                EnoshimaSensorInfo.starInfo = "星空は期待できなさそう。残念。";
                 EnoshimaSensorInfo.starStatus = 1;
             }
         }
