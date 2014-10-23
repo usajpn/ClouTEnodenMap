@@ -1,9 +1,10 @@
-/* @pjs preload="../../img/odakyu/odakyu.png, ../../img/odakyu/staff0.png, ../../img/odakyu/staff1.png" */
+/* @pjs preload="../../img/train/shonan_mono.png, ../../img/train/shonanshinjuku.png, ../../img/train/tokaido.png, ../../img/train/yokosuka.png, ../../img/train/odakyu.png, ../../img/train/staff0.png, ../../img/train/staff1.png" */
 
 int timer = 0;
 int current = 0;
 int trainStatus = 0;
 String trainType = {"湘南新宿ライン", "東海道本線", "横須賀線", "小田急線", "湘南モノレール"};
+String trainImg = {"shonanshinjuku", "tokaido", "yokosuka", "odakyu", "shonan_mono"};
 String infoText = {"平常運転です", "遅延しております"};
 int next = 0;
 
@@ -51,10 +52,9 @@ void draw(){
 
     if (timer - current > 10) {
         drawStaff();
+        drawTrain();
         drawTrainInfo();
     }
-
-    drawTrain();
 
 }
 
@@ -63,15 +63,15 @@ void drawBackground() {
 }
 
 void drawStaff() {
-    drawImage("../../img/odakyu/staff" + trainStatus + ".png", 0, 0, 480, 640);
+    drawImage("../../img/train/staff" + trainStatus + ".png", 0, 0, 480, 640);
 }
 
 void drawTrain() {
     if (timer % 20 == 0) {
-        drawImage("../../img/odakyu/odakyu.png", 475, 110, 400, 200);
+        drawImage("../../img/train/" + trainImg[next] + ".png", 475, 110, 400, 200);
     }
     else {
-        drawImage("../../img/odakyu/odakyu.png", 475, 100, 400, 200);
+        drawImage("../../img/train/" + trainImg[next] + ".png", 475, 100, 400, 200);
     }
 }
 

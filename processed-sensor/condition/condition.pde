@@ -5,7 +5,7 @@ int timer = 0;
 int condition = 0;
 int glow = 150;
 int prefix = 1;
-Stirng status = {"江ノ島へGo!", "今 江ノ島は心地いいよ!", "今 江ノ島が快適だよ！"};
+Stirng status = {"江の島へGo!", "今 江の島は心地いいよ!", "今 江の島が快適だよ！"};
 
 // Processing default function (1)
 void setup() {
