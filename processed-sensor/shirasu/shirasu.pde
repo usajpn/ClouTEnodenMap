@@ -10,8 +10,9 @@ void setup() {
     size(window.screen.width, window.screen.height);
     background(0);
     fill(0);
-    PFont fontA = loadFont("courier");
-    textFont(fontA, 20);  
+    //PFont fontA = loadFont("courier");
+    //textFont(fontA, 20);  
+    textFont(createFont("Hiragino Maru Gothic Pro",20));
 }
 
 // Processing default function (2)
@@ -39,16 +40,16 @@ void drawShirasu() {
 
     if (amount == 0) {
         if (small) {
-            drawImage("../../img/shirasu.png", 150, 250, 640, 480);
-            drawImage("../../img/shirasu.png", 250, 250, 640, 480);
-            drawImage("../../img/shirasu.png", 150, 150, 640, 480);
-            drawImage("../../img/shirasu.png", 250, 150, 640, 480);
+            drawImage("../../img/shirasu.png", 150, 270, 640, 460);
+            drawImage("../../img/shirasu.png", 250, 270, 640, 460);
+            drawImage("../../img/shirasu.png", 150, 170, 640, 460);
+            drawImage("../../img/shirasu.png", 250, 170, 640, 460);
         }
         else {
-            drawImage("../../img/shirasu.png", 160, 270, 640, 480);
-            drawImage("../../img/shirasu.png", 260, 270, 640, 480);
-            drawImage("../../img/shirasu.png", 200, 170, 640, 480);
-            drawImage("../../img/shirasu.png", 300, 170, 640, 480);
+            drawImage("../../img/shirasu.png", 160, 290, 640, 460);
+            drawImage("../../img/shirasu.png", 260, 290, 640, 460);
+            drawImage("../../img/shirasu.png", 200, 190, 640, 460);
+            drawImage("../../img/shirasu.png", 300, 190, 640, 460);
         }
     }
     else {
@@ -68,21 +69,21 @@ void drawAmount() {
     if (amount == 0) {
         if (small) {
             textSize(70);
-            text(txt[0], 250, 80);
+            text(txt[0], 250, 60);
         }
         else {
             textSize(70);
-            text(txt[0], 240, 100);
+            text(txt[0], 240, 80);
         }
     }
     // 入荷僅か
     else if (amount == 1) {
         textSize(70);
-        text(txt[1], 270, 80);
+        text(txt[1], 270, 60);
     }
     else {
         textSize(70);
-        text("", 540, 80);
+        text("", 540, 60);
     }
 }
 

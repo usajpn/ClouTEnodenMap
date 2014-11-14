@@ -13,7 +13,8 @@ void setup() {
     background(0);
     fill(0);
     PFont fontA = loadFont("courier");
-    textFont(fontA, 20);  
+    textFont(createFont("Hiragino Maru Gothic Pro",20));
+    //textFont(fontA, 20);  
 }
 
 // Processing default function (2)
