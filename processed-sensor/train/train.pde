@@ -3,8 +3,24 @@
 int timer = 0;
 int current = 0;
 int trainStatus = 0;
-String trainType = {"湘南新宿ライン", "東海道本線", "横須賀線", "小田急線", "湘南モノレール"};
-String trainImg = {"shonanshinjuku", "tokaido", "yokosuka", "odakyu", "shonan_mono"};
+String trainType = {
+    "湘南新宿ライン",
+    /*
+    "東海道本線",
+    "横須賀線",
+    */
+    "小田急線",
+    "湘南モノレール"
+};
+String trainImg = {
+    "shonanshinjuku",
+    /*
+    "tokaido",
+    "yokosuka",
+    */
+    "odakyu",
+    "shonan_mono"
+};
 String infoText = {"平常運転です", "遅延しております"};
 int next = 0;
 
@@ -30,23 +46,25 @@ void draw(){
         if (next == 0) {
             trainStatus = getShonanShinjukuStatus();
         }
+        /*
         else if (next == 1) {
             trainStatus = getTokaidoStatus();
         }
         else if (next == 2) {
             trainStatus = getYokosukaStatus();
         }
-        else if (next == 3) {
+        */
+        else if (next == 1) {
             trainStatus = getOdakyuStatus();
         }
-        else if (next == 4) {
+        else if (next == 2) {
             trainStatus = getShonanMonoStatus();
         }
         else {
             trainStatus = getShonanShinjukuStatus();
         }
 
-        if (next > 4) {
+        if (next > 2) {
             next = 0;
         }
     }

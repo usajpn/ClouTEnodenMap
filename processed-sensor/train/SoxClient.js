@@ -1,10 +1,12 @@
 var trainSensorInfo = {};
 trainSensorInfo.shonanShinjukuInfo = "";
 trainSensorInfo.shonanShinjukuStatus = 0;
+/*
 trainSensorInfo.tokaidoInfo = "";
 trainSensorInfo.tokaidoStatus = 0;
 trainSensorInfo.yokosukaInfo = "";
 trainSensorInfo.yokosukaStatus = 0;
+*/
 trainSensorInfo.shonanMonoInfo = "";
 trainSensorInfo.shonanMonoStatus = 0;
 trainSensorInfo.odakyuInfo = "";
@@ -18,6 +20,7 @@ function getShonanShinjukuStatus() {
     return trainSensorInfo.shonanShinjukuStatus;
 }
 
+/*
 function getTokaidoInfo() {
     return trainSensorInfo.tokaidoInfo;
 }
@@ -33,6 +36,7 @@ function getYokosukaInfo() {
 function getYokosukaStatus() {
     return trainSensorInfo.yokosukaStatus;
 }
+*/
 
 function getOdakyuInfo() {
     return trainSensorInfo.odakyuInfo;
@@ -62,6 +66,7 @@ function eventListener(device, transducer, data) {
                 trainSensorInfo.shonanShinjukuStatus = 1;
             }
         }
+        /*
         if (transducer.name == "東海道本線") {
             trainSensorInfo.tokaidoInfo = data.rawValue;
             
@@ -83,6 +88,7 @@ function eventListener(device, transducer, data) {
                 trainSensorInfo.yokosukaStatus = 1;
             }
         }
+        */
         if (transducer.name == "小田急江ノ島線") {
             trainSensorInfo.odakyuInfo = data.rawValue;
             
