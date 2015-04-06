@@ -177,7 +177,7 @@
 			// **discoverNodes** returns the nodes of a *Collection* node with id `node`.
 			// If `node` is not passed, the nodes of the root node on the service are returned instead.
 			// See [http://xmpp.org/extensions/xep-0060.html#entity-nodes](http://xmpp.org/extensions/xep-0060.html#entity-nodes)
-			discoverNodes : function(node) {
+			discoverNodes : function(node, timeout) {
 				var d = $.Deferred(), iq = $iq({
 					to : this.service,
 					type : 'get',
@@ -198,7 +198,7 @@
 					d.resolve($.map($('item', result), function(item, idx) {
 						return $(item).attr('node');
 					}));
-				}, d.reject);
+				}, d.reject, timeout);
 				return d.promise();
 			},
 
@@ -341,7 +341,8 @@
 			// **unsubscribe** unsubscribes the user's bare JID from the node with id `node`. If managing multiple
 			// subscriptions it is possible to optionally specify the `subid`.
 			// See [http://xmpp.org/extensions/xep-0060.html#subscriber-unsubscribe](http://xmpp.org/extensions/xep-0060.html#subscriber-unsubscribe)
-			unsubscribe : function(node, subid) {
+			unsubscribe : function(node, jid, subid) {
+				var _jid = jid ? jid : Strophe.getBareJidFromJid(this._connection.jid);
 				var d = $.Deferred();
 				var iq = $iq({
 					to : this.service,
@@ -351,8 +352,7 @@
 					xmlns : Strophe.NS.PUBSUB
 				}).c('unsubscribe', {
 					node : node,
-					//jid : Strophe.getBareJidFromJid(this._connection.jid)
-					jid : this._connection.jid
+					jid : _jid
 				});
 				if (subid)
 					iq.attrs({

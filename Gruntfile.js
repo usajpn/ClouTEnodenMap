@@ -6,11 +6,16 @@ module.exports = function(grunt) {
             enoshimap_sox_client: {
                 src: [
                     './js/lib/jquery-1.10.2.js',
-                    './js/lib/json2.js',
+                    './js/lib/jquery.dropotron.min.js',
+                    './js/lib/config.js',
                     './js/lib/underscore-min.js',
                     './js/lib/backbone.js',
                     './js/lib/strophe.js',
                     './js/lib/sox.strophe.pubsub.js',
+                    './js/lib/strope.x.js',
+                    './js/lib/jscron.js',
+                    './js/SoxClient.js',
+                    './js/SoxEventListener.js',
                     './js/Device.js',
                     './js/Transducer.js',
                     './js/SensorData.js',
