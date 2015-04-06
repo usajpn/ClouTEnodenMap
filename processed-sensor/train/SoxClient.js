@@ -55,6 +55,9 @@ function getShonanMonoStatus() {
 }
 
 function eventListener(device, transducer, data) {
+    console.log("---------------------------------");
+    console.log(device.nodeName);
+    console.log("---------------------------------");
     if(device.nodeName=="列車運行情報"){
         if (transducer.name == "湘南新宿ライン") {
             trainSensorInfo.shonanShinjukuInfo = data.rawValue;
@@ -113,9 +116,43 @@ function eventListener(device, transducer, data) {
 }
 
 $(document).ready(function() {
-    var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "列車運行情報", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
+    var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "列車運行情報", "guest@sox.ht.sfc.keio.ac.jp", "miroguest");
+    var soxEventListener = new SoxEventListener();
+    soxEventListener.connected = function(soxEvent) {
+        console.log("[SoxClient.js]" + soxEvent.soxClient);
+        status("Connected: " + soxEvent.soxClient);
+
+        var device = new Device("列車運行情報");
+
+        if (!client.subscribeDevice(device)) {
+            status("Couldn't send subscription request: " + device);
+        }
+    };
+    soxEventListener.connectionFailed = function(soxEvent) {
+        status("Connection Failed: " + soxEvent.soxClient);
+    };
+    soxEventListener.subscribed = function(soxEvent) {
+        status("Subscribed: " + soxEvent.device);
+    };
+    soxEventListener.subscriptionFailed = function(soxEvent) {
+        status("Subscription Failed: " + soxEvent.device);
+    };
+    soxEventListener.metaDataReceived = function(soxEvent) {
+        status("Meta data received: " + soxEvent.device);
+    };
+    soxEventListener.sensorDataReceived = function(soxEvent) {
+        console.log("-------------------------------------");
+        console.log("sensor data: " + soxEvent.device);
+        console.log("-------------------------------------");
+    };
+
+    client.setSoxEventListener(soxEventListener);
+    client.connect();
+
+    /*
+    var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "列車運行情報", "guest@sox.ht.sfc.keio.ac.jp", "miroguest");
     try {
-        device.subscribe();
+        device.subscribeDevice();
         device.setSensorDataListener(eventListener);
     } catch(e) {
         alert("Failed to subscribe " + e.toString());
@@ -123,4 +160,11 @@ $(document).ready(function() {
             console.log(e.stack);
         }
     }
+    */
 });
+
+function status(message) {
+    var html = (new Date().toLocaleStrin() + " [SoxClient.js] " + message +
+        "<hr>\n" + $("#status").html());
+    $("#status").html(html);
+}

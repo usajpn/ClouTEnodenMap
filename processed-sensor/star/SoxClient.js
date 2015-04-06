@@ -32,6 +32,42 @@ function eventListener(device, transducer, data) {
 }
 
 $(document).ready(function() {
+    var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "guest@sox.ht.sfc.keio.ac.jp", "miroguest");
+    var soxEventListener = new SoxEventListener();
+    soxEventListener.connected = function(soxEvent) {
+        console.log("[SoxClient.js]" + soxEvent.soxClient);
+        status("Connected: " + soxEvent.soxClient);
+
+        var device = new Device("江ノ島今日の生活指数");
+
+        if (!client.subscribeDevice(device)) {
+            status("Couldn't send subscription request: " + device);
+        }
+    };
+    soxEventListener.connectionFailed = function(soxEvent) {
+        status("Connection Failed: " + soxEvent.soxClient);
+    };
+    soxEventListener.subscribed = function(soxEvent) {
+        status("Subscribed: " + soxEvent.device);
+    };
+    soxEventListener.subscriptionFailed = function(soxEvent) {
+        status("Subscription Failed: " + soxEvent.device);
+    };
+    soxEventListener.metaDataReceived = function(soxEvent) {
+        status("Meta data received: " + soxEvent.device);
+    };
+    soxEventListener.sensorDataReceived = function(soxEvent) {
+        console.log("-------------------------------------");
+        console.log("sensor data: " + soxEvent.device);
+        console.log("-------------------------------------");
+        // status("Sensor data received: " + soxEvent.device);
+        // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
+    };
+
+    client.setSoxEventListener(soxEventListener);
+    client.connect();
+
+    /*
     var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "江ノ島今日の生活指数", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
 
     try {
@@ -43,4 +79,5 @@ $(document).ready(function() {
             console.log(e.stack);
         }
     }
+    */
 });

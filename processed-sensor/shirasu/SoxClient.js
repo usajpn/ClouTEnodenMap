@@ -51,7 +51,50 @@ function getToday() {
     return today;
 }
 
-$(document).ready(function() {
+// $(document).ready(function() {
+window.onload = function() {
+    var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
+    var soxEventListener = new SoxEventListener();
+    soxEventListener.connected = function(soxEvent) {
+        console.log("[SoxClient.js]" + soxEvent.soxClient);
+        status("Connected: " + soxEvent.soxClient);
+
+        var device = new Device("しらすの入荷情報湘南");
+
+        if (!client.subscribeDevice(device)) {
+            status("Couldn't send subscription request: " + device);
+        }
+    };
+    soxEventListener.connectionFailed = function(soxEvent) {
+        status("Connection Failed: " + soxEvent.soxClient);
+    };
+    soxEventListener.subscribed = function(soxEvent) {
+        status("Subscribed: " + soxEvent.device);
+        console.log("-------------------------------------");
+        console.log("subscribed: " + soxEvent.device);
+        console.log("-------------------------------------");
+    };
+    soxEventListener.subscriptionFailed = function(soxEvent) {
+        status("Subscription Failed: " + soxEvent.device);
+    };
+    soxEventListener.metaDataReceived = function(soxEvent) {
+        status("Meta data received: " + soxEvent.device);
+        console.log("-------------------------------------");
+        console.log("meta data: " + soxEvent.device);
+        console.log("-------------------------------------");
+    };
+    soxEventListener.sensorDataReceived = function(soxEvent) {
+        console.log("-------------------------------------");
+        console.log("sensor device: " + soxEvent.device);
+        console.log("sensor transducer: " + soxEvent.device.transducers.length);
+        console.log("-------------------------------------");
+        // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
+    };
+
+    client.setSoxEventListener(soxEventListener);
+    client.connect();
+
+    /*
     var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "しらすの入荷情報湘南", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
     try {
         device.subscribe();
@@ -62,4 +105,5 @@ $(document).ready(function() {
             console.log(e.stack);
         }
     }
-});
+    */
+};
