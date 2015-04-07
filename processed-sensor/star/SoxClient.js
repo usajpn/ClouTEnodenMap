@@ -15,16 +15,16 @@ function getEnoshimaStarInfo() {
     return EnoshimaSensorInfo.starInfo;
 }
 
-function eventListener(device, transducer, data) {
-    if(device.nodeName=="江ノ島今日の生活指数"){
-        if (transducer.name == "星空") {
-            EnoshimaSensorInfo.starInfo = data.rawValue;
-            console.log(data.rawValue);
+function eventListener(device, transducer) {
+    if(device=="江ノ島今日の生活指数"){
+        if (transducer.sensorData.id == "星空") {
+            EnoshimaSensorInfo.starInfo = transducer.sensorData.rawValue;
+            console.log(transducer.sensorData.rawValue);
 
-            if (data.rawValue.indexOf("空一杯") >= 0 || data.rawValue.indexOf("まずまず") >= 0) {
+            if (transducer.sensorData.rawValue.indexOf("空一杯") >= 0 || transducer.sensorData.rawValue.indexOf("まずまず") >= 0) {
                 EnoshimaSensorInfo.starStatus = 1;
             }
-            else if (data.rawValue.indexOf("期待") >= 0 || data.rawValue.indexOf("わずか") >= 0) {
+            else if (transducer.sensorData.rawValue.indexOf("期待") >= 0 || transducer.sensorData.rawValue.indexOf("わずか") >= 0) {
                 EnoshimaSensorInfo.starInfo = "星空は期待できなさそう。残念。";
                 EnoshimaSensorInfo.starStatus = 0;
             }
@@ -42,6 +42,7 @@ $(document).ready(function() {
     soxEventListener.connected = function(soxEvent) {
         console.log("[SoxClient.js]" + soxEvent.soxClient);
         status("Connected: " + soxEvent.soxClient);
+        client.unsubscribeAll();
 
         var device = new Device("江ノ島今日の生活指数");
 
@@ -62,8 +63,12 @@ $(document).ready(function() {
         status("Meta data received: " + soxEvent.device);
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
-        status("Sensor data received: " + soxEvent.device);
-        // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
+        // status("Sensor data received: " + soxEvent.device);
+        var transducers = soxEvent.device.transducers;
+
+        transducers.forEach(function(transducer) {
+            eventListener(soxEvent.device.name, soxEvent.device.transducer);
+        });
     };
 
     client.setSoxEventListener(soxEventListener);

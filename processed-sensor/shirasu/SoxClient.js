@@ -5,26 +5,26 @@ function getEnoshimaShirasuAmount() {
     return EnoshimaSensorInfo.amount;
 }
 
-function eventListener(device, transducer, data) {
+function eventListener(device, transducer) {
     var today = getToday();
 
-    if(device.nodeName=="しらすの入荷情報湘南"){
-        if (transducer.name == "入荷情報") {
-            EnoshimaSensorInfo.shirasu = data.rawValue;
+    if(device=="しらすの入荷情報湘南"){
+        if (transducer.sensorData.id == "入荷情報") {
+            EnoshimaSensorInfo.shirasu = transudcer.sensorData.rawValue;
 
-            if (data.rawValue.indexOf(today) < 0) {
+            if (transudcer.sensorData.rawValue.indexOf(today) < 0) {
                 // 未入荷
                 EnoshimaSensorInfo.amount = 1;
 
                 return;
             }
 
-            if (data.rawValue.indexOf("未入荷") >= 0) {
+            if (transudcer.sensorData.rawValue.indexOf("未入荷") >= 0) {
                 // 未入荷
                 EnoshimaSensorInfo.amount = 1;
             }
-            else if (data.rawValue.indexOf("入荷") >= 0) {
-                if (data.rawValue.indexOf("僅か") >= 0) {
+            else if (transudcer.sensorData.rawValue.indexOf("入荷") >= 0) {
+                if (transudcer.sensorData.rawValue.indexOf("僅か") >= 0) {
                     // 入荷僅か
                     EnoshimaSensorInfo.amount = 1;
                 }
@@ -57,6 +57,7 @@ $(document).ready(function() {
     soxEventListener.connected = function(soxEvent) {
         console.log("[SoxClient.js]" + soxEvent.soxClient);
         status("Connected: " + soxEvent.soxClient);
+        client.unsubscribeAll();
 
         var device = new Device("しらすの入荷情報湘南");
 
@@ -78,7 +79,11 @@ $(document).ready(function() {
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
         status("Sensor data received: " + soxEvent.device);
-        // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
+        var transducers = soxEvent.device.transudcers;
+
+        transudcers.forEach(function(transudcer) {
+            eventListener(soxEvent.device.name, transudcer);
+        });
     };
 
     client.setSoxEventListener(soxEventListener);

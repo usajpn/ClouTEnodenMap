@@ -44,13 +44,13 @@ function getComfortness(temperature, humid) {
     return comfortness;
 }
 
-function eventListener(device, transducer, data) {
-    if(device.nodeName=="江ノ島ヨットハーバー"){
-        if (transducer.name == "気温") {
-            EnoshimaSensorInfo.temperature = data.rawValue;
+function eventListener(device, transducer) {
+    if(device=="江ノ島ヨットハーバー"){
+        if (transducer.sensorData.id == "気温") {
+            EnoshimaSensorInfo.temperature = transducer.sensorData.rawValue;
         }
-        if (transducer.name == "湿度") {
-            EnoshimaSensorInfo.humid = data.rawValue;
+        if (transducer.sensorData.id == "湿度") {
+            EnoshimaSensorInfo.humid = transducer.sensorData.rawValue;
         }
     }
 }
@@ -61,6 +61,7 @@ $(document).ready(function() {
     soxEventListener.connected = function(soxEvent) {
         console.log("[SoxClient.js]" + soxEvent.soxClient);
         status("Connected: " + soxEvent.soxClient);
+        client.unsubscribeAll();
 
         var device = new Device("江ノ島ヨットハーバー");
 
@@ -83,6 +84,11 @@ $(document).ready(function() {
     soxEventListener.sensorDataReceived = function(soxEvent) {
         status("Sensor data received: " + soxEvent.device);
         // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
+        var transducers = soxEvent.device.transducers;
+
+        transducers.forEach(function(transducer) {
+            eventListener(soxEvent.device.name, transducer);
+        });
     };
 
     client.setSoxEventListener(soxEventListener);

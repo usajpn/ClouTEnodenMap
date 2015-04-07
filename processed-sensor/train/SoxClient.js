@@ -59,13 +59,10 @@ function getShonanMonoStatus() {
     return trainSensorInfo.shonanMonoStatus;
 }
 
-function eventListener(device, transducer, data) {
-    console.log("---------------------------------");
-    console.log(device.nodeName);
-    console.log("---------------------------------");
-    if(device.nodeName=="列車運行情報"){
-        if (transducer.name == "湘南新宿ライン") {
-            trainSensorInfo.shonanShinjukuInfo = data.rawValue;
+function eventListener(device, transducer) {
+    if(device=="列車運行情報"){
+        if (transducer.sensorData.id == "湘南新宿ライン") {
+            trainSensorInfo.shonanShinjukuInfo = transducer.sensorData.rawValue;
             
             if (trainSensorInfo.shonanShinjukuInfo.indexOf("平常運転") >= 0) {
                 trainSensorInfo.shonanShinjukuStatus = 0;
@@ -97,8 +94,8 @@ function eventListener(device, transducer, data) {
             }
         }
         */
-        if (transducer.name == "小田急江ノ島線") {
-            trainSensorInfo.odakyuInfo = data.rawValue;
+        if (transducer.sensorData.id == "小田急江ノ島線") {
+            trainSensorInfo.odakyuInfo = transducer.sensorData.rawValue;
             
             if (trainSensorInfo.odakyuInfo.indexOf("平常運転") >= 0) {
                 trainSensorInfo.odakyuStatus = 0;
@@ -107,8 +104,8 @@ function eventListener(device, transducer, data) {
                 trainSensorInfo.odakyuStatus = 1;
             }
         }
-        if (transducer.name == "湘南モノレール") {
-            trainSensorInfo.shonanMonoInfo = data.rawValue;
+        if (transducer.sensorData.id == "湘南モノレール") {
+            trainSensorInfo.shonanMonoInfo = transducer.sensorData.rawValue;
             
             if (trainSensorInfo.shonanMonoInfo.indexOf("平常運転") >= 0) {
                 trainSensorInfo.shonanMonoStatus = 0;
@@ -126,6 +123,7 @@ $(document).ready(function() {
     soxEventListener.connected = function(soxEvent) {
         console.log("[SoxClient.js]" + soxEvent.soxClient);
         status("Connected: " + soxEvent.soxClient);
+        client.unsubscribeAll();
 
         var device = new Device("列車運行情報");
 
@@ -147,6 +145,11 @@ $(document).ready(function() {
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
         status("Sensor data received: " + soxEvent.device);
+        var transducers = soxEvent.device.transducers;
+
+        transducers.forEach(function(transducer) {
+            eventListener(soxEvent.device.name, transducer);
+        });
     };
 
     client.setSoxEventListener(soxEventListener);
