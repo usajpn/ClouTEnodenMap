@@ -51,8 +51,7 @@ function getToday() {
     return today;
 }
 
-// $(document).ready(function() {
-window.onload = function() {
+$(document).ready(function() {
     var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
     var soxEventListener = new SoxEventListener();
     soxEventListener.connected = function(soxEvent) {
@@ -70,40 +69,27 @@ window.onload = function() {
     };
     soxEventListener.subscribed = function(soxEvent) {
         status("Subscribed: " + soxEvent.device);
-        console.log("-------------------------------------");
-        console.log("subscribed: " + soxEvent.device);
-        console.log("-------------------------------------");
     };
     soxEventListener.subscriptionFailed = function(soxEvent) {
         status("Subscription Failed: " + soxEvent.device);
     };
     soxEventListener.metaDataReceived = function(soxEvent) {
         status("Meta data received: " + soxEvent.device);
-        console.log("-------------------------------------");
-        console.log("meta data: " + soxEvent.device);
-        console.log("-------------------------------------");
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
-        console.log("-------------------------------------");
-        console.log("sensor device: " + soxEvent.device);
-        console.log("sensor transducer: " + soxEvent.device.transducers.length);
-        console.log("-------------------------------------");
+        status("Sensor data received: " + soxEvent.device);
         // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
     };
 
     client.setSoxEventListener(soxEventListener);
     client.connect();
+});
 
-    /*
-    var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "しらすの入荷情報湘南", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
-    try {
-        device.subscribe();
-        device.setSensorDataListener(eventListener);
-    } catch(e) {
-        alert("Failed to subscribe " + e.toString());
-        if (e.stack) {
-            console.log(e.stack);
-        }
-    }
-    */
-};
+function status(message) {
+    // var html = (new Date().toLocaleString() + " [SoxClient.js] " + message +
+    //     "<hr>\n" + $("#status").html());
+    // $("#status").html(html);
+    console.log("-------------------------------------");
+    console.log(message);
+    console.log("-------------------------------------");
+}

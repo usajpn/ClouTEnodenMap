@@ -1,3 +1,8 @@
+var boshService = "http://sox.ht.sfc.keio.ac.jp:5280/http-bind/";
+var xmppServer = "sox.ht.sfc.keio.ac.jp";
+var jid = "guest@sox.ht.sfc.keio.ac.jp";
+var password = "miroguest";
+
 var trainSensorInfo = {};
 trainSensorInfo.shonanShinjukuInfo = "";
 trainSensorInfo.shonanShinjukuStatus = 0;
@@ -116,7 +121,7 @@ function eventListener(device, transducer, data) {
 }
 
 $(document).ready(function() {
-    var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "列車運行情報", "guest@sox.ht.sfc.keio.ac.jp", "miroguest");
+    var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "guest@sox.ht.sfc.keio.ac.jp", "miroguest");
     var soxEventListener = new SoxEventListener();
     soxEventListener.connected = function(soxEvent) {
         console.log("[SoxClient.js]" + soxEvent.soxClient);
@@ -141,30 +146,18 @@ $(document).ready(function() {
         status("Meta data received: " + soxEvent.device);
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
-        console.log("-------------------------------------");
-        console.log("sensor data: " + soxEvent.device);
-        console.log("-------------------------------------");
+        status("Sensor data received: " + soxEvent.device);
     };
 
     client.setSoxEventListener(soxEventListener);
     client.connect();
-
-    /*
-    var device = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "列車運行情報", "guest@sox.ht.sfc.keio.ac.jp", "miroguest");
-    try {
-        device.subscribeDevice();
-        device.setSensorDataListener(eventListener);
-    } catch(e) {
-        alert("Failed to subscribe " + e.toString());
-        if (e.stack) {
-            console.log(e.stack);
-        }
-    }
-    */
 });
 
 function status(message) {
-    var html = (new Date().toLocaleStrin() + " [SoxClient.js] " + message +
-        "<hr>\n" + $("#status").html());
-    $("#status").html(html);
+    // var html = (new Date().toLocaleString() + " [SoxClient.js] " + message +
+    //     "<hr>\n" + $("#status").html());
+    // $("#status").html(html);
+    console.log("-------------------------------------");
+    console.log(message);
+    console.log("-------------------------------------");
 }

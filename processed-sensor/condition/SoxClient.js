@@ -1,3 +1,8 @@
+var boshService = "http://sox.ht.sfc.keio.ac.jp:5280/http-bind/";
+var xmppServer = "sox.ht.sfc.keio.ac.jp";
+var jid = "guest@sox.ht.sfc.keio.ac.jp";
+var password = "miroguest";
+
 var EnoshimaSensorInfo = {};
 EnoshimaSensorInfo.humid = 0;
 EnoshimaSensorInfo.temperature = 0;
@@ -51,7 +56,7 @@ function eventListener(device, transducer, data) {
 }
 
 $(document).ready(function() {
-    var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "guest@sox.ht.sfc.keio.ac.jp", "miroguest");
+    var client = new SoxClient(boshService, xmppServer, jid, password);
     var soxEventListener = new SoxEventListener();
     soxEventListener.connected = function(soxEvent) {
         console.log("[SoxClient.js]" + soxEvent.soxClient);
@@ -76,26 +81,19 @@ $(document).ready(function() {
         status("Meta data received: " + soxEvent.device);
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
-        console.log("-------------------------------------");
-        console.log("sensor data: " + soxEvent.device);
-        console.log("-------------------------------------");
-        // status("Sensor data received: " + soxEvent.device);
+        status("Sensor data received: " + soxEvent.device);
         // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
     };
 
     client.setSoxEventListener(soxEventListener);
     client.connect();
-
-    /*
-    var device1 = new Device("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "江ノ島ヨットハーバー", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
-    try {
-        device1.subscribe();
-        device1.setSensorDataListener(eventListener);
-    } catch(e) {
-        alert("Failed to subscribe " + e.toString());
-        if (e.stack) {
-            console.log(e.stack);
-        }
-    }
-    */
 });
+
+function status(message) {
+    // var html = (new Date().toLocaleString() + " [SoxClient.js] " + message +
+    //     "<hr>\n" + $("#status").html());
+    // $("#status").html(html);
+    console.log("-------------------------------------");
+    console.log(message);
+    console.log("-------------------------------------");
+}
