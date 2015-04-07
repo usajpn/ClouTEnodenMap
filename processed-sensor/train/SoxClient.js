@@ -4,7 +4,7 @@ var xmppServer = "sox.ht.sfc.keio.ac.jp";
 var jid = "guest@sox.ht.sfc.keio.ac.jp";
 var password = "miroguest";
 
-// prepate varibles (these cannot be used in processing.js)
+// (EDIT) Prepare varibles (but these cannot be used in processing.js)
 var trainSensorInfo = {};
 trainSensorInfo.shonanShinjukuInfo = "";
 trainSensorInfo.shonanShinjukuStatus = 0;
@@ -19,7 +19,12 @@ trainSensorInfo.yokosukaInfo = "";
 trainSensorInfo.yokosukaStatus = 0;
 */
 
-// prepare getter methods to call from processing.js
+/*
+ * (EDIT) Prepare getter methods to call from processing.js
+ * To use javascript variables in processing.js
+ *  you have to call by getter methods
+ *
+ */
 function getShonanShinjukuInfo() {
     return trainSensorInfo.shonanShinjukuInfo;
 }
@@ -53,11 +58,14 @@ function getYokosukaStatus() {
 }
 */
 
-// called when received sensor data
+// Called when received sensor data
 function eventListener(device, transducer) {
-    // check if the device name is the one you want
+    // (EDIT) check if the DEVICE name is the one you want
     if(device=="列車運行情報"){
-        // EDIT below depending on which transducer you want to use
+        /*
+         * (EDIT) change below statements depending on
+         * which TRANSDUCER & what VALUE you want to use
+         */
         if (transducer.id == "湘南新宿ライン") {
             trainSensorInfo.shonanShinjukuInfo = transducer.sensorData.rawValue;
             
@@ -114,7 +122,7 @@ function eventListener(device, transducer) {
     }
 }
 
-// create new SoxClient when page is loaded
+// Create new SoxClient when page is loaded
 $(document).ready(function() {
     var client = new SoxClient(boshService, xmppServer, jid, password);
     var soxEventListener = new SoxEventListener();
@@ -123,7 +131,10 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        // change the device name depending on which device you want to subscribe
+        /*
+         * (EDIT) change the device name depending on
+         * which DEVICE you want to subscribe
+         */
         var device = new Device("列車運行情報");
 
         if (!client.subscribeDevice(device)) {

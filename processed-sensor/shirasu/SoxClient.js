@@ -4,22 +4,30 @@ var xmppServer = "sox.ht.sfc.keio.ac.jp";
 var jid = "guest@sox.ht.sfc.keio.ac.jp";
 var password = "miroguest";
 
-// prepate varibles (these cannot be used in processing.js)
+// (EDIT) Prepare varibles (but these cannot be used in processing.js)
 var EnoshimaSensorInfo = {};
 EnoshimaSensorInfo.amount = 2;
 
-// prepare getter methods to call from processing.js
+/*
+ * (EDIT) Prepare getter methods to call from processing.js
+ * To use javascript variables in processing.js
+ *  you have to call by getter methods
+ *
+ */
 function getEnoshimaShirasuAmount() {
     return EnoshimaSensorInfo.amount;
 }
 
-// called when received sensor data
+// Called when received sensor data
 function eventListener(device, transducer) {
     var today = getToday();
 
-    // check if the device name is the one you want
+    // (EDIT) check if the DEVICE name is the one you want
     if(device=="しらすの入荷情報湘南") {
-        // EDIT below depending on which transducer you want to use
+        /*
+         * (EDIT) change below statements depending on
+         * which TRANSDUCER & what VALUE you want to use
+         */
         if (transducer.id == "入荷情報") {
             EnoshimaSensorInfo.shirasu = transudcer.sensorData.rawValue;
 
@@ -62,7 +70,7 @@ function getToday() {
     return today;
 }
 
-// create new SoxClient when page is loaded
+// Create new SoxClient when page is loaded
 $(document).ready(function() {
     var client = new SoxClient(boshService, xmppServer, jid, password);
     var soxEventListener = new SoxEventListener();
@@ -71,7 +79,10 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        // change the device name depending on which device you want to subscribe
+        /*
+         * (EDIT) change the device name depending on
+         * which DEVICE you want to subscribe
+         */
         var device = new Device("しらすの入荷情報湘南");
 
         if (!client.subscribeDevice(device)) {
