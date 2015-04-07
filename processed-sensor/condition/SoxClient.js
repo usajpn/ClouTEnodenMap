@@ -1,18 +1,20 @@
+// server info (DO NOT EDIT)
 var boshService = "http://sox.ht.sfc.keio.ac.jp:5280/http-bind/";
 var xmppServer = "sox.ht.sfc.keio.ac.jp";
 var jid = "guest@sox.ht.sfc.keio.ac.jp";
 var password = "miroguest";
 
+// prepate varibles (these cannot be used in processing.js)
 var EnoshimaSensorInfo = {};
 EnoshimaSensorInfo.humid = 0;
 EnoshimaSensorInfo.temperature = 0;
 
+// prepare getter methods to call from processing.js
 function getEnoshimaCondition() {
     var comfortness = getComfortness(EnoshimaSensorInfo.temperature, EnoshimaSensorInfo.humid); 
 
     return comfortness;
 }
-
 function getComfortness(temperature, humid) {
     var comfortness = 0;
     var discomfortness = 0.81 * temperature + 0.01 * humid * (0.99 * temperature - 14.3) + 46.3;
@@ -44,8 +46,11 @@ function getComfortness(temperature, humid) {
     return comfortness;
 }
 
+// called when received sensor data
 function eventListener(device, transducer) {
+    // check if the device name is the one you want
     if(device=="江ノ島ヨットハーバー"){
+        // EDIT below depending on which transducer you want to use
         if (transducer.id == "気温") {
             EnoshimaSensorInfo.temperature = transducer.sensorData.rawValue;
         }
@@ -55,6 +60,7 @@ function eventListener(device, transducer) {
     }
 }
 
+// create new SoxClient when page is loaded
 $(document).ready(function() {
     var client = new SoxClient(boshService, xmppServer, jid, password);
     var soxEventListener = new SoxEventListener();
@@ -63,6 +69,7 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
+        // change the device name depending on which device you want to subscribe
         var device = new Device("江ノ島ヨットハーバー");
 
         if (!client.subscribeDevice(device)) {
@@ -82,8 +89,7 @@ $(document).ready(function() {
         status("Meta data received: " + soxEvent.device);
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
-        status("Sensor data received: " + soxEvent.device);
-        // eventListener(soxEvent.device, soxEvent.transducer, soxEvent.data);
+        // status("Sensor data received: " + soxEvent.device);
         var transducers = soxEvent.device.transducers;
 
         transducers.forEach(function(transducer) {

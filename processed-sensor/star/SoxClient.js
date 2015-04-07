@@ -1,30 +1,36 @@
+// server info (DO NOT EDIT)
 var boshService = "http://sox.ht.sfc.keio.ac.jp:5280/http-bind/";
 var xmppServer = "sox.ht.sfc.keio.ac.jp";
 var jid = "guest@sox.ht.sfc.keio.ac.jp";
 var password = "miroguest";
 
+// prepate varibles (these cannot be used in processing.js)
 var EnoshimaSensorInfo = {};
 EnoshimaSensorInfo.starInfo = "";
 EnoshimaSensorInfo.starStatus = 0;
 
+// prepare getter methods to call from processing.js
 function getEnoshimaStarStatus() {
     return EnoshimaSensorInfo.starStatus;
 }
-
 function getEnoshimaStarInfo() {
     return EnoshimaSensorInfo.starInfo;
 }
 
+// called when received sensor data
 function eventListener(device, transducer) {
+    // check if the device name is the one you want
     if(device=="江ノ島今日の生活指数"){
+        // EDIT below depending on which transducer you want to use
         if (transducer.id == "星空") {
-            EnoshimaSensorInfo.starInfo = transducer.sensorData.rawValue;
-            console.log(transducer.sensorData.rawValue);
+            var data = transducer.sensorData.rawValue;
+            EnoshimaSensorInfo.starInfo = data;
+            console.log(data);
 
-            if (transducer.sensorData.rawValue.indexOf("空一杯") >= 0 || transducer.sensorData.rawValue.indexOf("まずまず") >= 0) {
+            if (data.indexOf("空一杯") >= 0 || data.indexOf("まずまず") >= 0) {
                 EnoshimaSensorInfo.starStatus = 1;
             }
-            else if (transducer.sensorData.rawValue.indexOf("期待") >= 0 || transducer.sensorData.rawValue.indexOf("わずか") >= 0) {
+            else if (data.indexOf("期待") >= 0 || data.indexOf("わずか") >= 0) {
                 EnoshimaSensorInfo.starInfo = "星空は期待できなさそう。残念。";
                 EnoshimaSensorInfo.starStatus = 0;
             }
@@ -36,6 +42,7 @@ function eventListener(device, transducer) {
     }
 }
 
+// create new SoxClient when page is loaded
 $(document).ready(function() {
     var client = new SoxClient(boshService, xmppServer, jid, password);
     var soxEventListener = new SoxEventListener();
@@ -44,6 +51,7 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
+        // change the device name depending on which device you want to subscribe
         var device = new Device("江ノ島今日の生活指数");
 
         if (!client.subscribeDevice(device)) {
@@ -65,7 +73,6 @@ $(document).ready(function() {
     soxEventListener.sensorDataReceived = function(soxEvent) {
         // status("Sensor data received: " + soxEvent.device);
         var transducers = soxEvent.device.transducers;
-
         transducers.forEach(function(transducer) {
             status(transducer);
             eventListener(soxEvent.device.name, transducer);

@@ -1,14 +1,25 @@
+// server info (DO NOT EDIT)
+var boshService = "http://sox.ht.sfc.keio.ac.jp:5280/http-bind/";
+var xmppServer = "sox.ht.sfc.keio.ac.jp";
+var jid = "guest@sox.ht.sfc.keio.ac.jp";
+var password = "miroguest";
+
+// prepate varibles (these cannot be used in processing.js)
 var EnoshimaSensorInfo = {};
 EnoshimaSensorInfo.amount = 2;
 
+// prepare getter methods to call from processing.js
 function getEnoshimaShirasuAmount() {
     return EnoshimaSensorInfo.amount;
 }
 
+// called when received sensor data
 function eventListener(device, transducer) {
     var today = getToday();
 
-    if(device=="しらすの入荷情報湘南"){
+    // check if the device name is the one you want
+    if(device=="しらすの入荷情報湘南") {
+        // EDIT below depending on which transducer you want to use
         if (transducer.id == "入荷情報") {
             EnoshimaSensorInfo.shirasu = transudcer.sensorData.rawValue;
 
@@ -51,14 +62,16 @@ function getToday() {
     return today;
 }
 
+// create new SoxClient when page is loaded
 $(document).ready(function() {
-    var client = new SoxClient("http://sox.ht.sfc.keio.ac.jp:5280/http-bind/", "sox.ht.sfc.keio.ac.jp", "cloutfujisawa@sox.ht.sfc.keio.ac.jp", "pAnAke!o");
+    var client = new SoxClient(boshService, xmppServer, jid, password);
     var soxEventListener = new SoxEventListener();
     soxEventListener.connected = function(soxEvent) {
         console.log("[SoxClient.js]" + soxEvent.soxClient);
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
+        // change the device name depending on which device you want to subscribe
         var device = new Device("しらすの入荷情報湘南");
 
         if (!client.subscribeDevice(device)) {
@@ -78,7 +91,7 @@ $(document).ready(function() {
         status("Meta data received: " + soxEvent.device);
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
-        status("Sensor data received: " + soxEvent.device);
+        // status("Sensor data received: " + soxEvent.device);
         var transducers = soxEvent.device.transudcers;
 
         transudcers.forEach(function(transudcer) {
