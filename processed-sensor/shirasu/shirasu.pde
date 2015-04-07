@@ -1,4 +1,6 @@
 /* @pjs preload="../../img/shirasu.png, ../../img/batsu.png" */
+// You have to declare which images you are going to use in above
+// declare them in comma separeted style
 
 boolean small = false;
 int timer = 0;

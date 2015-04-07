@@ -1,4 +1,6 @@
 /* @pjs preload="../../img/star/star.png, ../../img/star/starwatching.png" */
+// You have to declare which images you are going to use in above
+// declare them in comma separeted style
 
 int timer = 0;
 int starStatus = 0;

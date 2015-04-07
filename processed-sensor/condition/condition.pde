@@ -1,4 +1,6 @@
 /* @pjs preload="../../img/aquariam.png, ../../img/camera.png, ../../img/scuba.gif, ../../img/happy_woman/happy_woman0.png, ../../img/happy_woman/happy_woman1.png, ../../img/happy_woman/happy_woman2.png" */
+// You have to declare which images you are going to use in above
+// declare them in comma separeted style
 
 boolean small = false;
 int timer = 0;

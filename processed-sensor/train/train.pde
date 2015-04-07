@@ -1,25 +1,27 @@
 /* @pjs preload="../../img/train/shonan_mono.png, ../../img/train/shonanshinjuku.png, ../../img/train/tokaido.png, ../../img/train/yokosuka.png, ../../img/train/odakyu.png, ../../img/train/staff0.png, ../../img/train/staff1.png" */
+// You have to declare which images you are going to use in above
+// declare them in comma separeted style
 
 int timer = 0;
 int current = 0;
 int trainStatus = 0;
 String trainType = {
     "湘南新宿ライン",
+    "小田急線",
+    "湘南モノレール"
     /*
     "東海道本線",
     "横須賀線",
     */
-    "小田急線",
-    "湘南モノレール"
 };
 String trainImg = {
     "shonanshinjuku",
+    "odakyu",
+    "shonan_mono"
     /*
     "tokaido",
     "yokosuka",
     */
-    "odakyu",
-    "shonan_mono"
 };
 String infoText = {"平常運転です", "遅延しております"};
 int next = 0;
