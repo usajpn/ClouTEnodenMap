@@ -17,7 +17,7 @@ function getEnoshimaStarInfo() {
 
 function eventListener(device, transducer) {
     if(device=="江ノ島今日の生活指数"){
-        if (transducer.sensorData.id == "星空") {
+        if (transducer.id == "星空") {
             EnoshimaSensorInfo.starInfo = transducer.sensorData.rawValue;
             console.log(transducer.sensorData.rawValue);
 
@@ -67,7 +67,8 @@ $(document).ready(function() {
         var transducers = soxEvent.device.transducers;
 
         transducers.forEach(function(transducer) {
-            eventListener(soxEvent.device.name, soxEvent.device.transducer);
+            status(transducer);
+            eventListener(soxEvent.device.name, transducer);
         });
     };
 

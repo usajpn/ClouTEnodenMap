@@ -46,10 +46,10 @@ function getComfortness(temperature, humid) {
 
 function eventListener(device, transducer) {
     if(device=="江ノ島ヨットハーバー"){
-        if (transducer.sensorData.id == "気温") {
+        if (transducer.id == "気温") {
             EnoshimaSensorInfo.temperature = transducer.sensorData.rawValue;
         }
-        if (transducer.sensorData.id == "湿度") {
+        if (transducer.id == "湿度") {
             EnoshimaSensorInfo.humid = transducer.sensorData.rawValue;
         }
     }

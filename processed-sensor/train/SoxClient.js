@@ -61,7 +61,7 @@ function getShonanMonoStatus() {
 
 function eventListener(device, transducer) {
     if(device=="列車運行情報"){
-        if (transducer.sensorData.id == "湘南新宿ライン") {
+        if (transducer.id == "湘南新宿ライン") {
             trainSensorInfo.shonanShinjukuInfo = transducer.sensorData.rawValue;
             
             if (trainSensorInfo.shonanShinjukuInfo.indexOf("平常運転") >= 0) {
@@ -94,7 +94,7 @@ function eventListener(device, transducer) {
             }
         }
         */
-        if (transducer.sensorData.id == "小田急江ノ島線") {
+        if (transducer.id == "小田急江ノ島線") {
             trainSensorInfo.odakyuInfo = transducer.sensorData.rawValue;
             
             if (trainSensorInfo.odakyuInfo.indexOf("平常運転") >= 0) {
@@ -104,7 +104,7 @@ function eventListener(device, transducer) {
                 trainSensorInfo.odakyuStatus = 1;
             }
         }
-        if (transducer.sensorData.id == "湘南モノレール") {
+        if (transducer.id == "湘南モノレール") {
             trainSensorInfo.shonanMonoInfo = transducer.sensorData.rawValue;
             
             if (trainSensorInfo.shonanMonoInfo.indexOf("平常運転") >= 0) {

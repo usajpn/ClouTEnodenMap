@@ -9,7 +9,7 @@ function eventListener(device, transducer) {
     var today = getToday();
 
     if(device=="しらすの入荷情報湘南"){
-        if (transducer.sensorData.id == "入荷情報") {
+        if (transducer.id == "入荷情報") {
             EnoshimaSensorInfo.shirasu = transudcer.sensorData.rawValue;
 
             if (transudcer.sensorData.rawValue.indexOf(today) < 0) {
