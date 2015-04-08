@@ -14,12 +14,12 @@ module.exports = function(grunt) {
                     './js/lib/sox.strophe.pubsub.js',
                     './js/lib/strope.x.js',
                     './js/lib/jscron.js',
-                    './js/Sox/SoxClient.js',
-                    './js/Sox/SoxEventListener.js',
-                    './js/Sox/Device.js',
-                    './js/Sox/Transducer.js',
-                    './js/Sox/SensorData.js',
-                    './js/Sox/EnodenTimetable.js',
+                    './js/SoxClient.js',
+                    './js/SoxEventListener.js',
+                    './js/Device.js',
+                    './js/Transducer.js',
+                    './js/SensorData.js',
+                    './js/EnodenTimetable.js',
                     './bower_components/Processing.js/processing.js'
                 ],
                 dest: 'dist/Enoshimap.js'
