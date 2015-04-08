@@ -131,15 +131,28 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        /*
-         * (EDIT) change the device name depending on
-         * which DEVICE you want to subscribe
-         */
-        var device = new Device("列車運行情報");
-
-        if (!client.subscribeDevice(device)) {
-            status("Couldn't send subscription request: " + device);
+        if (!soxEvent.soxClient.discoverDevices()) {
+            status("[SoxClient.js] Counldn't get device list: " + soxEvent.soxClient);
         }
+    };
+    soxEventListener.discovered = function(soxEvent) {
+        try {
+            console.log("[SoxClient.js] Discovered " + soxEvent.devices);
+            for (var i = 0; i < soxEvent.devices.length; i++) {
+                /*
+                 * (EDIT) change the device name depending on
+                 * which DEVICE you want to subscribe
+                 */
+                if (soxEvent.devices[i].nodeName == "列車運行情報") {
+                    client.subscribeDevice(soxEvent.devices[i]);
+                }
+            }
+        } catch (e) {
+            printStackTrace(e);
+        }
+    };
+    soxEventListener.discoveryFailed = function(soxEvent) {
+        console.log("[main.js] Discovery failed " + soxEvent);
     };
     soxEventListener.connectionFailed = function(soxEvent) {
         status("Connection Failed: " + soxEvent.soxClient);
@@ -154,7 +167,7 @@ $(document).ready(function() {
         status("Meta data received: " + soxEvent.device);
     };
     soxEventListener.sensorDataReceived = function(soxEvent) {
-        // status("Sensor data received: " + soxEvent.device);
+        status("Sensor data received: " + soxEvent.device);
         var transducers = soxEvent.device.transducers;
 
         transducers.forEach(function(transducer) {
