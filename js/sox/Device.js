@@ -8,29 +8,15 @@
  * @param publishModel publish model of this device. value must be one of open, publishers, or subscribers. ignored for remote device
  * @param transducers array of transducers of this device. ignored for remote device 
  */
-
 function Device(nodeName, name, type, accessModel, publishModel, transducers) {
 	/**
 	 * profiles of this device included in SoX specification
 	 */
 	this.nodeName = nodeName;
-	if(name){
-		this.name = name;
-	}else{
-		this.name = nodeName;
-	}
+	this.name = name;
 	this.type = type;
-	if(accessModel){
-		this.accessModel = accessModel;
-	}else{
-		this.accessModel = "open";
-	}
-	
-	if(publishModel){
-		this.publishModel = publishModel;
-	}else{
-		this.publishModel = "open";
-	}
+	this.accessModel = accessModel;
+	this.publishModel = publishModel;
 
 	/**
 	 * runtime information that won't be included in meta data
@@ -42,11 +28,8 @@ function Device(nodeName, name, type, accessModel, publishModel, transducers) {
 	}
 	this.soxEventListener = null;
 
-	this.maxPayloadSize = 1000000;
 	this.dataSubid = "";
 	this.metaSubid = "";
-	this.dataConfig = "";
-	this.metaConfig = "";
 	this.dataSubscribed = false;
 	this.metaSubscribed = false;
 }
@@ -159,7 +142,7 @@ Device.fromXML = function(jQueryObject){
 };
 
 Device.prototype.toString = function() {
-	var deviceString = "Device[nodeName="+this.nodeName+", name="+this.name+", type="+this.type+", accessModel="+this.accessModel+", publishModel="+this.publishModel+", metaConfig="+JSON.stringify(this.metaConfig)+", dataConfig="+JSON.stringify(this.dataConfig)+", transducers=";
+	var deviceString = "Device[nodeName="+this.nodeName+", name="+this.name+", type="+this.type+", accessModel="+this.accessModel+", publishModel="+this.publishModel+", transducers=";
 	var transducerString = "[";
 	if(this.transducers){
 		this.transducers.forEach(function(transducer){
@@ -348,14 +331,6 @@ Device.prototype.getTransducerAt = function(index){
 
 Device.prototype.getTransducerCount = function(){
 	return this.transducers.length;
-};
-
-Device.prototype.getMetaConfiguration = function(){
-	return this.metaConfig;
-};
-
-Device.prototype.getDataConfiguration = function(){
-	return this.dataConfig;
 };
 
 /**

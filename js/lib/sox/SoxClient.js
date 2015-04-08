@@ -64,7 +64,8 @@ SoxClient.prototype.connect = function() {
 			}
 		} else if (status == Strophe.Status.CONNECTED) {
 			if (me.jid && me.password) {
-				// if jid and password are given, we are authenticated by the server
+				// if jid and password are given, we are authenticated by the
+				// server
 				me.authenticated = true;
 			}
 			console.log("[SoxClient.js] Connected to " + me);
@@ -152,9 +153,6 @@ SoxClient.prototype.disconnect = function() {
 	};
 })(jQuery);
 
-/**
- * 指定されたデバイスについて、XMPPサーバに問い合わせ、トランスデューサのリストやノードの設定情報を得る。
- */
 SoxClient.prototype.resolveDevice = function(device) {
 	if (!this.connection || !this.authenticated) {
 		return false;
@@ -162,66 +160,7 @@ SoxClient.prototype.resolveDevice = function(device) {
 
 	var me = this;
 	console.log("[SoxClient.js] resolveDevice name=" + device.nodeName);
-	var metaConfigSuccessCallback = function(data) {
-		device.metaConfig = data;
-		/* dataノードのコンフィグを取る */
-		me.connection.PubSub.getNodeConfig(device.nodeName + "_data").done(dataConfigSuccessCallback).fail(dataConfigFailureCallback);
-	};
-	var metaConfigFailureCallback = function(data) {
-		console.log("[SoxClient.js] resolve failed. Couldn't get meta config of device=" + device);
-		/* ノードコンフィグを見る権限が無いユーザでauthした場合にここに来る。トランスデューサリストとかは取れたので通知 */
-		if (me.soxEventListener) {
-			me.soxEventListener.resolved({
-				soxClient : me,
-				device : device,
-			});
-		}
-		
-		/*
-		if (me.soxEventListener) {
-			var errorElement = $(data).find('error');
-			errorCode = $(errorElement).attr('code');
-			errorType = $(errorElement).attr('type');
-			me.soxEventListener.resolveFailed({
-				soxClient : me,
-				device : device,
-				errorCode: errorCode,
-				errorType: errorType
-			});
-		}*/
-	};
-	var dataConfigSuccessCallback = function(data) {
-		device.dataConfig = data;
-		if (me.soxEventListener) {
-			me.soxEventListener.resolved({
-				soxClient : me,
-				device : device,
-			});
-		}
-	};
-	var dataConfigFailureCallback = function(data) {
-		console.log("[SoxClient.js] resolve failed. Couldn't get data config of device=" + device);
-		if (me.soxEventListener) {
-			me.soxEventListener.resolved({
-				soxClient : me,
-				device : device,
-			});
-		}
-		/*
-		if (me.soxEventListener) {
-			var errorElement = $(data).find('error');
-			errorCode = $(errorElement).attr('code');
-			errorType = $(errorElement).attr('type');
-			me.soxEventListener.resolveFailed({
-				soxClient : me,
-				device : device,
-				errorCode: errorCode,
-				errorType: errorType
-			});
-		}
-		*/
-	};
-	var itemsSuccessCallback = function(data) {
+	var successCallback = function(data) {
 		/* dataは以下のような感じ
 		<body xmlns='http://jabber.org/protocol/httpbind'><presence xmlns='jabber:client' from='sensorizer@sox.ht.sfc.keio.ac.jp/9719511701413823240149044' to='sensorizer@sox.ht.sfc.keio.ac.jp/4256993771413823283837524'><priority>-1</priority><delay xmlns='urn:xmpp:delay' from='sensorizer@sox.ht.sfc.keio.ac.jp/9719511701413823240149044' stamp='2014-10-20T16:40:40Z'/><x xmlns='jabber:x:delay' stamp='20141020T16:40:40'/></presence><presence xmlns='jabber:client' from='sensorizer@sox.ht.sfc.keio.ac.jp/937465781413816191856773' to='sensorizer@sox.ht.sfc.keio.ac.jp/4256993771413823283837524'><priority>-1</priority><delay xmlns='urn:xmpp:delay' from='sensorizer@sox.ht.sfc.keio.ac.jp/937465781413816191856773' stamp='2014-10-20T14:43:12Z'/><x xmlns='jabber:x:delay' stamp='20141020T14:43:12'/></presence><presence xmlns='jabber:client' from='sensorizer@sox.ht.sfc.keio.ac.jp/27765683871413823264621828' to='sensorizer@sox.ht.sfc.keio.ac.jp/4256993771413823283837524'><priority>-1</priority><delay xmlns='urn:xmpp:delay' from='sensorizer@sox.ht.sfc.keio.ac.jp/27765683871413823264621828' stamp='2014-10-20T16:41:05Z'/><x xmlns='jabber:x:delay' stamp='20141020T16:41:05'/></presence><presence xmlns='jabber:client' from='sensorizer@sox.ht.sfc.keio.ac.jp/4256993771413823283837524' to='sensorizer@sox.ht.sfc.keio.ac.jp/4256993771413823283837524'><priority>-1</priority></presence><iq xmlns='jabber:client' from='pubsub.sox.ht.sfc.keio.ac.jp' to='sensorizer@sox.ht.sfc.keio.ac.jp/4256993771413823283837524' id='1:sendIQ' type='result'><pubsub xmlns='http://jabber.org/protocol/pubsub'><items node='しらすの入荷情報湘南_meta'><item id='metaInfo'><device name='しらすの入荷情報湘南' type='outdoor weather'>&lt;transducer name=&apos;url&apos; id=&apos;url&apos; /&gt;
 		&lt;transducer name=&apos;入荷情報&apos; id=&apos;入荷情報&apos; /&gt;
@@ -246,9 +185,12 @@ SoxClient.prototype.resolveDevice = function(device) {
 				device.addTransducer(transducer);
 				console.log("[SoxClient.js] SoxClient::resolveDevice: Created " + transducer);
 			}
-			
-			/* metaノードのコンフィグを取る */
-			me.connection.PubSub.getNodeConfig(device.nodeName + "_meta").done(metaConfigSuccessCallback).fail(metaConfigFailureCallback);
+			if (me.soxEventListener) {
+				me.soxEventListener.resolved({
+					soxClient : me,
+					device : device,
+				});
+			}
 		} catch (e) {
 			printStackTrace(e);
 			if (me.soxEventListener) {
@@ -259,7 +201,7 @@ SoxClient.prototype.resolveDevice = function(device) {
 			}
 		}
 	};
-	var itemsFailureCallback = function(data) {
+	var failureCallback = function(data) {
 		console.log("[SoxClient.js] resolve failed. device=" + device);
 		if (me.soxEventListener) {
 			me.soxEventListener.resolveFailed({
@@ -268,8 +210,7 @@ SoxClient.prototype.resolveDevice = function(device) {
 			});
 		}
 	};
-	this.connection.PubSub.items(device.nodeName + "_meta").done(itemsSuccessCallback).fail(itemsFailureCallback);
-	return true;
+	this.connection.PubSub.items(device.nodeName + "_meta").done(successCallback).fail(failureCallback);
 };
 
 /**
@@ -361,7 +302,6 @@ SoxClient.prototype.createDevice = function(device) {
 	this.connection.PubSub.createNode(device.nodeName + "_data", {
 		'pubsub#access_model' : device.accessModel,
 		'pubsub#publish_model' : device.publishModel,
-		'pubsub#max_payload_size' : device.maxPayloadSize,
 		'pubsub#max_items' : 1
 	}).done(successDataCallback).fail(failureCallback);
 
@@ -544,17 +484,6 @@ SoxClient.prototype.publishDevice = function(device) {
 	};
 	var failureCallback = function(data) {
 		console.log("[SoxClient.js] Publish Failed: ");
-		var errorCode = $(data).find('error').attr('code');
-		var errorType = $(data).find('error').attr('type');
-		if (me.soxEventListener) {
-			me.soxEventListener.publishFailed({
-				soxClient : me,
-				nodeName : device.name + "_data",
-				device : device,
-				errorCode: errorCode,
-				errorType: errorType
-			});
-		}
 	};
 
 	if (device.isDataDirty()) {
@@ -573,9 +502,7 @@ SoxClient.prototype.publishDevice = function(device) {
 };
 
 /**
- * このデバイスをサブスクライブする。サブスクライブに失敗したら、このインスタンスを 例外として投げる。
- * サブスクライブに成功したらコールバック関数を呼び出す。デバイスにサブスクライブすると、metaとdataの
- * lastPublishedItemが送られてくるので、トランスデューサのリスト等が自動的に取れる。
+ * このデバイスをサブスクライブする。サブスクライブに失敗したら、このインスタンスを 例外として投げる。サブスクライブに成功したらコールバック関数を呼び出す。
  * This function returns true when a subscription request has been sent to the
  * server without waiting for its reply. If you need to be reminded when the
  * request has been processed, please register a soxEventListener using
