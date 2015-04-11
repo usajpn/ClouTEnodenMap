@@ -77,28 +77,11 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        if (!soxEvent.soxClient.discoverDevices()) {
+        var device = new Device("江ノ島ヨットハーバー");
+
+        if (!client.subscribeDevice(device)) {
             status("[SoxClient.js] Couldn't get device list: " + soxEvent.soxClient);
         }
-    };
-    soxEventListener.discovered = function(soxEvent) {
-        try {
-            console.log("[SoxClient.js] Discovered " + soxEvent.devices);
-            for (var i = 0; i < soxEvent.devices.length; i++) {
-                /*
-                 * (EDIT) change the device name depending on
-                 * which DEVICE you want to subscribe
-                 */
-                if (soxEvent.devices[i].nodeName == "江ノ島ヨットハーバー") {
-                    client.subscribeDevice(soxEvent.devices[i]);
-                }
-            }
-        } catch (e) {
-            printStackTrace(e);
-        }
-    };
-    soxEventListener.discoveryFailed = function(soxEvent) {
-        console.log("[main.js] Discovery failed " + soxEvent);
     };
     soxEventListener.connectionFailed = function(soxEvent) {
         status("Connection Failed: " + soxEvent.soxClient);

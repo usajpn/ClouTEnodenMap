@@ -58,7 +58,9 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        if (!soxEvent.soxClient.discoverDevices()) {
+        var device = new Device("江ノ島今日の生活指数");
+
+        if (!client.subscribeDevice(device)) {
             status("[SoxClient.js] Counldn't get device list: " + soxEvent.soxClient);
         }
     };

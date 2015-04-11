@@ -131,28 +131,11 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        if (!soxEvent.soxClient.discoverDevices()) {
+        var device = new Device("列車運行情報");
+
+        if (!client.subscribeDevice(device)) {
             status("[SoxClient.js] Counldn't get device list: " + soxEvent.soxClient);
         }
-    };
-    soxEventListener.discovered = function(soxEvent) {
-        try {
-            console.log("[SoxClient.js] Discovered " + soxEvent.devices);
-            for (var i = 0; i < soxEvent.devices.length; i++) {
-                /*
-                 * (EDIT) change the device name depending on
-                 * which DEVICE you want to subscribe
-                 */
-                if (soxEvent.devices[i].nodeName == "列車運行情報") {
-                    client.subscribeDevice(soxEvent.devices[i]);
-                }
-            }
-        } catch (e) {
-            printStackTrace(e);
-        }
-    };
-    soxEventListener.discoveryFailed = function(soxEvent) {
-        console.log("[main.js] Discovery failed " + soxEvent);
     };
     soxEventListener.connectionFailed = function(soxEvent) {
         status("Connection Failed: " + soxEvent.soxClient);
