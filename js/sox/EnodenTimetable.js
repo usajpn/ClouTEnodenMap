@@ -20,6 +20,104 @@ var EnodenTimetable = [
 	"23:03", "23:32", "23:55"
 ];
 
+function getTimeArrayFromHour() {
+	var timeArray = [];
+	var d = new Date();
+	var hour = d.getHours();
+	hour = parseInt(hour, 10);
+	for (var i=0; i<EnodenTimetable.length; i++) {
+		var h = getHourFromEnoTime(EnodenTimetable[i]);
+		if (h == hour) {
+			timeArray.push(EnodenTimetable[i]);
+		}
+	}
+	return timeArray;
+}
+
+function getTimeArray() {
+	var timeArray = [];
+
+	var position = getTimetablePosition();
+	if (0 <= position && position < EnodenTimetable.length - 1) {
+		for (var i=1; i<4; i++) {
+			if (EnodenTimetable[position + i]) {
+				timeArray.push(EnodenTimetable[position + i]);
+			}
+		}
+	} else {
+		// do nothing
+	}
+
+	return timeArray;
+}
+
+function getTimeArrayWithPast() {
+	var timeArray = [];
+
+	var position = getTimetablePosition();
+	if (0 <= position && position < EnodenTimetable.length - 1) {
+		for (var i=0; i<3; i++) {
+			if (EnodenTimetable[position + i]) {
+				timeArray.push(EnodenTimetable[position + i]);
+			}
+		}
+	} else {
+		// do nothing
+	}
+
+	return timeArray;	
+}
+
+function getTimetablePosition() {
+	var position = -1;
+	var d = new Date();
+	var cTime = d.getTime();
+
+	var enoShihatsu = getMilliSeconds(EnodenTimetable[0]);
+	var isShihatsu = _milliDiff(enoShihatsu, cTime);
+
+	for (var i=0; i<EnodenTimetable.length; i++) {
+		var enoTime = getMilliSeconds(EnodenTimetable[i], cTime);
+		var milliDiff = _milliDiff(enoTime, cTime);
+
+		if (0 < isShihatsu) { //shihatsu
+			position = 0;
+			break;
+		} else if (0 <= milliDiff) {
+			position = i - 1;
+			break;
+		}
+	}
+	return position;
+}
+
+// プラスになったらうれしい
+function _milliDiff(enoTime, cTime) {
+	return enoTime - cTime;
+}
+
+function getMilliSeconds(StringEnoTime) {
+	var etHourMin = StringEnoTime.split(":");
+	var etHour = etHourMin[0];
+	var etMin = etHourMin[1];
+
+	var etDate = new Date();
+	etDate.setHours(etHour);
+	etDate.setMinutes(etMin);
+
+	return etDate.getTime();
+}
+
+function getHourNow() {
+	var d = new Date();
+	return d.getHours();
+}
+
+function getMinuteNow() {
+	var d = new Date();
+	return d.getMinutes();
+}
+
 function getMinutesTilDeparture() {
 	var d = new Date();
 	var cTime = d.getTime();
@@ -51,6 +149,12 @@ function getMinutesTilDeparture() {
 	return result;
 }
 
+function getHourFromEnoTime(StringEnoTime) {
+	var etHourMin = StringEnoTime.split(":");
+	var etHour = etHourMin[0];
+	return parseInt(etHour, 10);
+}
+
 // return minus when cTime is before Enotime
 // return plus when cTime is after Enotime
 function getTimeDiff(StringEnoTime, cTime) {
@@ -66,3 +170,4 @@ function getTimeDiff(StringEnoTime, cTime) {
 	var diff = cTime - etTime;
 	return diff;
 }
+

@@ -47,7 +47,7 @@ void drawWindSpeed() {
 	int windSpeed = getEnoshimaWindSpeed();
 	fill(255, 255, 255);
 	textSize(60);
-	text("風速: " + windSpeed + "m/s", 400, 200);
+	text("風速: " + windSpeed, 400, 200);
 }
 
 void drawWindImg() {

@@ -76,14 +76,14 @@ void drawTemperature() {
 	int temp = getEnoshimaTemperature();
 	fill(255, 255, 255);
 	textSize(60);
-	text("気温: " + temp + "°C", 700, 350);
+	text("気温: " + temp, 700, 350);
 }
 
 void drawHumidity() {
 	int humidity = getEnoshimaHumidity();
 	fill(255, 255, 255);
 	textSize(60);
-	text("湿度: " + humidity + "%", 700, 450);
+	text("湿度: " + humidity, 700, 450);
 	textSize(20);
 	text("出典：一般財団法人日本気象協会（tenki.jp）", 700, 510);
 	text("江ノ島ヨットハーバー 気象情報", 760, 540);
