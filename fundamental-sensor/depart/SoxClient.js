@@ -58,7 +58,6 @@ $(document).ready(function() {
 
         var device = new Device("江ノ電遅延情報");
 
-        if (!soxEvent.soxClient.discoverDevices()) {
         if (!client.subscribeDevice(device)) {
             status("[SoxClient.js] Counldn't subscribe device: " + soxEvent.soxClient);
         }
