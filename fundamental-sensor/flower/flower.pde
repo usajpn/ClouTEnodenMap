@@ -1,10 +1,9 @@
-/* @pjs preload="../../img/flowerC.png" */
+/* @pjs preload="../../img/map.png, ../../img/sunny.png, ../../img/cloudy.png, ../../img/rainy.png, ../../img/enone.png, ../../img/enonex.png, ../../img/wave.png, ../../img/bubble.png, ../../img/weatherbubble.png, ../../img/flowerC.png */
 
 int timer = 0;
 boolean small = true;
 boolean smallE = true;
 boolean flower1 = true;
-int flower_color = 1;
 boolean left = true;
 String flower = "../../img/flowerC.png";
 
@@ -31,51 +30,44 @@ void drawBackground() {
 	background(0);
 }
 
-void drawFlower(){
-	if (timer % 40 == 0){
-		if (small){
-			small = false;		
-		}else{
-			small = true;		
+void drawFlower() {
+	if (timer % 40 == 0) {
+		if (small) {
+			small = false;
+		} else {
+			small = true;	
 		}
 	}
-	/*
-	if (timer % 240 == 0){
-		if (flower_color == 1){
-			flower_color = 0;		
-		} else {
-			flower_color = 1;		
-		}		
-	}
-	*/
-	w = flower;
+
+	String w = flower;
+
 	if (small) {
-		drawImage(w, 0, 0, 600, 600);		
+		drawImage(w, 0, 0, 600, 600);
 	} else {
-		drawImage(w, 0, 10, 600, 600);		
+		drawImage(w, 0, 10, 600, 600);
 	}
 }
 
 void drawTitle() {
 	fill(255, 255, 255);
-	textSize(80);
-	text("今日の花", 700, 150);
+	textSize(70);
+	text("今日の花", 630, 150);
 }
 
 void drawFlowerName() {
 	int maxTemp = getFlowerName();
 	fill(255, 255, 255);
 	textSize(60);
-	//text("最高気温: " + maxTemp + "°C", 700, 350);
-	text("誕生花:" + maxTemp, 700 ,350);
+	text("誕生花", 670 ,280);
+	text(maxTemp, 670 ,380);
 }
 
 void drawFlowerWord() {
 	int minTemp = getFlowerWord();
 	fill(255, 255, 255);
 	textSize(60);
-	//text("最低気温: " + minTemp + "°C", 700, 450);
-	text("花言葉:" + minTemp, 700, 450);
+	text("花言葉", 670, 500);
+	text(minTemp, 670, 600);
 }
 
 void drawImage(String imgPath, x, y) {
