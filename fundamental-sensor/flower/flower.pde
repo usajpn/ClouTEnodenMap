@@ -51,23 +51,23 @@ void drawFlower() {
 void drawTitle() {
 	fill(255, 255, 255);
 	textSize(70);
-	text("今日の花", 630, 150);
+	text("今日の花", 610, 150);
 }
 
 void drawFlowerName() {
 	int maxTemp = getFlowerName();
 	fill(255, 255, 255);
 	textSize(60);
-	text("誕生花", 670 ,280);
-	text(maxTemp, 670 ,380);
+	text("誕生花", 650 ,280);
+	text(maxTemp, 650 ,380);
 }
 
 void drawFlowerWord() {
 	int minTemp = getFlowerWord();
 	fill(255, 255, 255);
 	textSize(60);
-	text("花言葉", 670, 500);
-	text(minTemp, 670, 600);
+	text("花言葉", 650, 500);
+	text(minTemp, 650, 600);
 }
 
 void drawImage(String imgPath, x, y) {

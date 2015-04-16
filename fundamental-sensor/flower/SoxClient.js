@@ -5,10 +5,10 @@ var jid = "cloutfujisawa@sox.ht.sfc.keio.ac.jp";
 var password = "pAnAke!o";
 
 // (EDIT) Prepare varibles (but these cannot be used in processing.js)
-var FlowerDataInfo = {};
-FlowerDataInfo.name = "loading..";
-FlowerDataInfo.word = "loading..";
+var FlowerSensorInfo = {};
 
+FlowerSensorInfo.name = "loading..";
+FlowerSensorInfo.word = "loading..";
 /*
  * (EDIT) Prepare getter methods to call from processing.js
  * To use javascript variables in processing.js
@@ -16,38 +16,41 @@ FlowerDataInfo.word = "loading..";
  *
  */
 
-function getEnoshimaMaxTemp() {
-    return FlowerDataInfo.name;
+function getFlowerName(){
+	return FlowerSensorInfo.name;
 }
 
-function getEnoshimaMinTemp() {
-    return FlowerDataInfo.word;
+function getFlowerWord(){
+	return FlowerSensorInfo.word;
 }
 
-function getFlowerName() {
-    return FlowerDataInfo.name;
-}
+function getNextDeparture() {
+    var min;
+    if (!FlowerSensorInfo.delay) {
+        
+    }
+    else {
+        // write when delay occurs
+    }
 
-function getFlowerWord() {
-    return FlowerDataInfo.word;
+    return min;
 }
-
 
 // Called when received sensor data
 function eventListener(device, transducer) {
     // (EDIT) check if the DEVICE name is the one you want
-    if(device=="flower"){
+    if(device=="flower2"){
         /*
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
          */
 
         if(transducer.id=="name"){
-            FlowerDataInfo.name = transducer.sensorData.rawValue;
+            FlowerSensorInfo.name = transducer.sensorData.rawValue;
         }
 
         if(transducer.id=="word"){
-            FlowerDataInfo.word = transducer.sensorData.rawValue;
+            FlowerSensorInfo.word = transducer.sensorData.rawValue;
         }
 
     }
@@ -62,7 +65,7 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        var device = new Device("flower");
+        var device = new Device("flower2");
 
         if (!client.subscribeDevice(device)) {
             status("[SoxClient.js] Counldn't subscribe device: " + soxEvent.soxClient);
