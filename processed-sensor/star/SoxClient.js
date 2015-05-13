@@ -34,6 +34,10 @@ function eventListener(device, transducer) {
             EnoshimaSensorInfo.starInfo = data;
             console.log(data);
 
+            EnoshimaSensorInfo.starInfo = transducer.sensorData.rawValue;
+            EnoshimaSensorInfo.starStatus = 1;
+
+            /*
             if (data.indexOf("空一杯") >= 0 || data.indexOf("まずまず") >= 0) {
                 EnoshimaSensorInfo.starStatus = 1;
             }
@@ -45,6 +49,7 @@ function eventListener(device, transducer) {
                 EnoshimaSensorInfo.starInfo = "星空は期待できなさそう。残念。";
                 EnoshimaSensorInfo.starStatus = 1;
             }
+            */
         }
     }
 }
