@@ -38,7 +38,8 @@ function eventListener(device, transducer) {
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
          */
-        if (!transducer.sensorData.rawValue) {
+        if (typeof transducer.sensorData === "undefined") {
+            status("Data undefined");
             return;
         }
 
@@ -71,7 +72,8 @@ function eventListener(device, transducer) {
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
          */
-        if (!transducer.sensorData.rawValue) {
+        if (typeof transducer.sensorData === "undefined") {
+            status("Data undefined");
             return;
         }
 

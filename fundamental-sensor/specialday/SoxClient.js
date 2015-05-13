@@ -26,7 +26,8 @@ function getWordCount() {
 function eventListener(device, transducer) {
     // (EDIT) check if the DEVICE name is the one you want
     if(device=="今日は何の日4"){
-        if (!transducer.sensorData.rawValue) {
+        if (typeof transducer.sensorData === "undefined") {
+            status("Data undefined");
             return;
         }
 
