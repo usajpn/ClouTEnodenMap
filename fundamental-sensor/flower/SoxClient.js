@@ -36,7 +36,7 @@ function getFlowerWord() {
 // Called when received sensor data
 function eventListener(device, transducer) {
     // (EDIT) check if the DEVICE name is the one you want
-    if(device=="flower"){
+    if(device=="flower2"){
         /*
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
@@ -62,7 +62,7 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        var device = new Device("flower");
+        var device = new Device("flower2");
 
         if (!client.subscribeDevice(device)) {
             status("[SoxClient.js] Counldn't subscribe device: " + soxEvent.soxClient);

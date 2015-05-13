@@ -62,7 +62,7 @@ function eventListener(device, transducer) {
         }
 
     }
-    else if (device=="江ノ島ヨットハーバー") {
+    else if (device=="EnoshimaYachtHarbour") {
         /*
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
@@ -88,7 +88,7 @@ $(document).ready(function() {
         status("Connected: " + soxEvent.soxClient);
         client.unsubscribeAll();
 
-        var deviceNames = ["江ノ島今日の天気", "江ノ島ヨットハーバー"];
+        var deviceNames = ["江ノ島今日の天気", "EnoshimaYachtHarbour"];
 
         if (!client.subscribeDevice()) {
             status("[SoxClient.js] Counldn't subscribe device: " + soxEvent.soxClient);
