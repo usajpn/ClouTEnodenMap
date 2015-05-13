@@ -38,6 +38,10 @@ function eventListener(device, transducer) {
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
          */
+        if (!transducer.sensorData.rawValue) {
+            return;
+        }
+
         if (transducer.id == "天気") {
             var value = String(transducer.sensorData.rawValue);
 
@@ -67,11 +71,14 @@ function eventListener(device, transducer) {
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
          */
+        if (!transducer.sensorData.rawValue) {
+            return;
+        }
+
         if (transducer.name == "気温") {
             var value = String(transducer.sensorData.rawValue);
             EnoshimaSensorInfo.temperature = value;
         }
-        
         if (transducer.name == "湿度") {
             var value = String(transducer.sensorData.rawValue);
             EnoshimaSensorInfo.humidity = value;

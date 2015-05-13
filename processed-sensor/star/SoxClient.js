@@ -29,6 +29,10 @@ function eventListener(device, transducer) {
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
          */
+        if (!transducer.sensorData.rawValue) {
+            return;
+        }
+
         if (transducer.id == "星空") {
             var data = transducer.sensorData.rawValue;
             EnoshimaSensorInfo.starInfo = data;

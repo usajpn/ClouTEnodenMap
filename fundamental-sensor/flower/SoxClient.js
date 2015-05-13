@@ -44,11 +44,13 @@ function eventListener(device, transducer) {
          * (EDIT) change below statements depending on
          * which TRANSDUCER & what VALUE you want to use
          */
+        if (!transducer.sensorData.rawValue) {
+            return;
+        }
 
         if(transducer.id=="name"){
             FlowerSensorInfo.name = transducer.sensorData.rawValue;
         }
-
         if(transducer.id=="word"){
             FlowerSensorInfo.word = transducer.sensorData.rawValue;
         }
